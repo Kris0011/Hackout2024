@@ -8,4 +8,7 @@ router.route("/login").get((req, res) => {
     )
 })
 
+router.route("/profile").get((req,res)=>{
+    res.send()
+})
 export default router;
