@@ -1,6 +1,4 @@
-import { SocketComp } from "./component/socketComp";
-
-
+import { SocketComp } from "./component/SocketComp";
 
 
 export default function App() {
