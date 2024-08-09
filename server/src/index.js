@@ -16,5 +16,5 @@ connectdb()
         console.error(error);
     })
     console.error('Error connecting to MongoDB');
-    // console.error(error);
+    console.error(error);
 })

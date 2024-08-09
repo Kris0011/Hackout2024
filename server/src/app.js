@@ -1,9 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { auth} from 'express-openid-connect';
-import { userRouter } from './Routes/userRouter.js';
-const http = require('http')
-const { Server } = require("socket.io");  
+import  userRouter  from './Routes/userRouter.js';
 
 const app = express();
 
@@ -13,9 +11,9 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   baseURL: 'http://localhost:3000',
-  clientID: 'Winf2sY2XywFxz4kUO25Zgihgupjk5NB',
+  clientID: process.env.CLIENTID,
   issuerBaseURL: 'https://dev-opk6mmz5ceopsl1s.us.auth0.com',
-  secret: 'LONG_RANDOM_STRING'
+  secret: process.env.SECRET
 };
 
 
