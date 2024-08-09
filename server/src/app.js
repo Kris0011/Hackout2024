@@ -12,10 +12,10 @@ const server =  http.createServer(app);
 const config = {
   authRequired: false,
   auth0Logout: true,
+  secret: process.env.SECRET,
   baseURL: 'http://localhost:3000',
   clientID: process.env.CLIENTID,
-  issuerBaseURL: 'https://dev-opk6mmz5ceopsl1s.us.auth0.com',
-  secret: process.env.SECRET
+  issuerBaseURL: process.env.ISUSERBASEURL
 };
 
 
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-app.use("/api", userRouter);
+app.use("/", userRouter);
 
 
 const io = new Server(server, {
