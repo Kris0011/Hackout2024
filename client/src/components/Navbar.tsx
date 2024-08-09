@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Grid, Menu, theme } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import Logo from "../assets/LOGO.png";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom"; 
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -11,7 +11,7 @@ function Navbar() {
   const { token } = useToken();
   const screens = useBreakpoint();
   const [current, setCurrent] = useState("home");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const menuItems = [
     {
@@ -46,7 +46,6 @@ function Navbar() {
     console.log("click ", e);
     setCurrent(e.key);
 
-    // Perform navigation based on the menu item clicked
     switch (e.key) {
       case "home":
         navigate("/");
@@ -129,8 +128,7 @@ function Navbar() {
           overflowedIndicator={<Button type="text" icon={<MenuOutlined />} />}
         />
         <div style={styles.buttonGroup}>
-          {screens.md && <Button type="text">Log in</Button>}
-          <Button type="primary">Sign up</Button>
+          <Button type="primary">Login</Button>
         </div>
       </div>
     </nav>
