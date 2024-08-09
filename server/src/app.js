@@ -1,9 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import { auth} from 'express-openid-connect';
-import { userRouter } from './routes/userRouter.js';
+import { userRouter } from './Routes/userRouter.js';
+const http = require('http')
+const { Server } = require("socket.io");  
 
 const app = express();
+
+const server =  http.createServer(app);
 
 const config = {
   authRequired: false,
@@ -13,6 +17,8 @@ const config = {
   issuerBaseURL: 'https://dev-opk6mmz5ceopsl1s.us.auth0.com',
   secret: 'LONG_RANDOM_STRING'
 };
+
+
 app.use(auth(config));
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -24,4 +30,27 @@ app.use(express.static('public'))
 
 app.use("/api", userRouter);
 
-export {app};
+
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:5173",
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		credentials: true,
+	},
+});
+
+
+io.on("connection", socket => {
+	
+
+	console.log("User connected");
+
+	socket.on("disconnect", () => {
+         console.log("User disconnected");
+	});
+
+});
+
+
+
+export {server};
