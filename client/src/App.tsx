@@ -5,21 +5,59 @@ import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PlantDiseaseDetction from "./pages/PlantDiseaseDetction";
 import Auction from "./pages/Auction";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export default function App() {
+
+  const dispatch = useDispatch();
+  const findUser = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/getuser" , { withCredentials: true });
+
+      console.log(res.data);
+
+      if(!res.data.loggedIn){
+        console.log("No user found");
+        dispatch({
+          type: "CLEAR_USER",
+        });
+        return;
+      }
+
+
+     
+
+    
+
+      dispatch({
+        type: "SET_USER",
+        payload: res.data,
+      });
+
+
+
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    findUser();
+  }, []);
 
   return (
     <div>
       <Router>
-      <Navbar /> 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/detection/crop" element={<CropDetection />}/>
-        <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />}/>
-        <Route path="/auction" element={<Auction />}/>
-      </Routes>
-    </Router>
+        <Toaster />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
     </div>
-  )
+  );
 }

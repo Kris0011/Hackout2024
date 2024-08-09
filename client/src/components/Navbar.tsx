@@ -2,16 +2,40 @@ import React, { useState } from "react";
 import { Button, Grid, Menu, Dropdown, theme } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../assets/LOGO.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import DropDown from "./Auth/DropDown";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
+
+
+
+
+
+
+
+
+
 
 function Navbar() {
   const { token } = useToken();
   const screens = useBreakpoint();
   const [current, setCurrent] = useState("home");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+
+  const { user }  = useSelector((state: any) => state.user);
+
+  const dispatch = useDispatch();
+
+  console.log(user);
+
+
+
+
+ 
 
   const menuItems = [
     {
@@ -96,7 +120,7 @@ function Navbar() {
       padding: `0 ${token.paddingLG}px`,
     },
     header: {
-      backgroundColor: token.colorBgContainer,
+      backgroundColor: "rgb(200, 200, 200)",
       borderBottom: `${token.lineWidth}px ${token.lineType} ${token.colorSplit}`,
       position: "relative",
     },
@@ -118,6 +142,8 @@ function Navbar() {
       flex: 1,
       margin: "0 20px",
       lineHeight: screens.sm ? "4rem" : "3.5rem",
+      backgroundColor: "rgb(200, 200, 200)",
+
     },
     menuContainer: {
       display: "flex",
@@ -129,10 +155,11 @@ function Navbar() {
       alignItems: "center",
       gap: "10px",
     },
+  
   };
 
   return (
-    <nav style={styles.header}>
+    <nav style={styles.header} >
       <div style={styles.container}>
         <div style={styles.logo}>
           <img src={Logo} alt="Logo" style={styles.logoImg} />
@@ -147,12 +174,26 @@ function Navbar() {
           overflowedIndicator={<Button type="text" icon={<MenuOutlined />} />}
         />
         <div style={styles.buttonGroup}>
-          <Dropdown
-            overlay={<Menu items={profileMenuItems} onClick={onClick} />}
-            trigger={['click']}
-          >
-            <Button type="text" icon={<UserOutlined />} />
-          </Dropdown>
+         
+         {
+            user &&  
+            <div>
+                <DropDown />
+                {/* <a href="http://localhost:3000/logout"><Button type="dashed">Logout</Button></a>  */}
+
+            </div>
+            
+           
+         }
+         {
+            !user && 
+            <a href="http://localhost:3000/login"><Button type="primary">Login</Button></a>
+         }
+      
+       
+           
+          
+          
         </div>
       </div>
     </nav>
