@@ -1,14 +1,18 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  fullname: {
+  name: {
     type: String,
     required: true,
   },
   email: {
     type: String,
     required: true,
+    unique: true,
+  },
+  ImageUrl: {
+    type: String,
     unique: true,
   },
   auctions: [
@@ -23,7 +27,6 @@ const UserSchema = new Schema({
       ref: "Bid",
     },
   ],
-
 });
 
-module.exports = mongoose.model("User", UserSchema);
+export const User = mongoose.model("User", UserSchema);
