@@ -1,41 +1,23 @@
+// src/components/HeroSection.js
+import { GithubFilled } from '@ant-design/icons';
+import Icon from '@ant-design/icons/lib/components/Icon';
 import React from 'react';
-import BackGround from '../assets/Background.jpeg';
-import { Button } from 'antd';
+import LOGO from '../assets/LOGO.png';
 
 const HeroSection = () => {
-  return (
-    <section className="relative bg-green-900 text-white h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 overflow-hidden">
-        <img
-          src={BackGround} 
-          alt="Agriculture Background"
-          className="w-full h-full object-cover object-center opacity-50"
-        />
-      </div>
-
-      <div className="relative z-10">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-          Transform Your Farm with Smart Technology
-        </h1>
-        <p className="text-lg sm:text-xl mb-8">
-          Get data-driven recommendations to optimize crop yields and reduce costs.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Button
-            type="primary"
-            className='bg-transparent text-xl h-[60px] text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-white hover:text-black transition duration-300'
-            >
-            Login
-          </Button>
-          <Button
-            className="bg-transparent text-xl border-2 h-[60px] text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-transparent hover:text-black transition duration-300"
-          >
-            About Project
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
-};
+    return (
+        <section className="flex items-center justify-center h-screen bg-cover bg-center text-white" style={{ backgroundImage: 'url(/path-to-your-background-image.png)' }}>
+             style={{ backgroundImage: 'url({LOGO})' }}>
+            <div className="bg-white bg-opacity-80 p-8 rounded-lg max-w-4xl w-full text-center">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">Welcome to Our Project</h1>
+                <p className="text-lg text-gray-600 mb-8">Discover the power of our solution and join the community.</p>
+                <div className="flex justify-center gap-4">
+                    <a href="/login" className="bg-orange-500 text-white py-2 px-6 rounded-lg font-bold hover:bg-orange-600 transition duration-300">Login</a>
+                    <a href="https://github.com/Kris0011/Hackout2024" className="bg-gray-800 text-white py-2 px-6 rounded-lg font-bold hover:bg-gray-700 transition duration-300" target="_blank"><GithubFilled /> View on GitHub</a>
+                </div>
+            </div>
+        </section>
+    );
+}
 
 export default HeroSection;

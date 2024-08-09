@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Grid, Menu, theme } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { Button, Grid, Menu, Dropdown, theme } from "antd";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../assets/LOGO.png";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -11,7 +11,7 @@ function Navbar() {
   const { token } = useToken();
   const screens = useBreakpoint();
   const [current, setCurrent] = useState("home");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const menuItems = [
     {
@@ -42,6 +42,17 @@ function Navbar() {
     },
   ];
 
+  const profileMenuItems = [
+    {
+      label: "Logout",
+      key: "logout",
+    },
+    {
+      label: "Login with other email",
+      key: "loginWithOtherEmail",
+    },
+  ];
+
   const onClick = (e: any) => {
     console.log("click ", e);
     setCurrent(e.key);
@@ -61,6 +72,14 @@ function Navbar() {
         break;
       case "auction":
         navigate("/auction");
+        break;
+      case "logout":
+        //TODO Handle logout
+        console.log("Logging out");
+        break;
+      case "loginWithOtherEmail":
+        //TODO Add func for login again
+        console.log("Login with other email");
         break;
       default:
         navigate("/");
@@ -128,7 +147,12 @@ function Navbar() {
           overflowedIndicator={<Button type="text" icon={<MenuOutlined />} />}
         />
         <div style={styles.buttonGroup}>
-          <Button type="primary">Login</Button>
+          <Dropdown
+            overlay={<Menu items={profileMenuItems} onClick={onClick} />}
+            trigger={['click']}
+          >
+            <Button type="text" icon={<UserOutlined />} />
+          </Dropdown>
         </div>
       </div>
     </nav>
