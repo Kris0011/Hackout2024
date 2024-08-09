@@ -3,11 +3,15 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { SocketProvider } from "./context/SocketContext.tsx";
+import { Provider } from "react-redux";
+import store from "./states/store.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <SocketProvider>
-      <App />
-    </SocketProvider>
+    <Provider store={store}>
+      <SocketProvider>
+        <App />
+      </SocketProvider>
+    </Provider>
   </StrictMode>
 );
