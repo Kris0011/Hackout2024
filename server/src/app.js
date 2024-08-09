@@ -5,6 +5,8 @@ import  userRouter  from './Routes/userRouter.js';
 
 const app = express();
 
+const server =  http.createServer(app);
+
 const config = {
   authRequired: false,
   auth0Logout: true,
@@ -13,6 +15,8 @@ const config = {
   clientID: process.env.CLIENTID,
   issuerBaseURL: process.env.ISUSERBASEURL
 };
+
+
 app.use(auth(config));
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -24,4 +28,27 @@ app.use(express.static('public'))
 
 app.use("/", userRouter);
 
-export {app};
+
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:5173",
+		methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+		credentials: true,
+	},
+});
+
+
+io.on("connection", socket => {
+	
+
+	console.log("User connected");
+
+	socket.on("disconnect", () => {
+         console.log("User disconnected");
+	});
+
+});
+
+
+
+export {server};
