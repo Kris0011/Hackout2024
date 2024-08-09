@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Grid, Menu, Space, theme } from "antd";
+import { Button, Grid, Menu, theme } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
-import Logo from "../assets/LOGO.png"; 
+import Logo from "../assets/LOGO.png";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -9,7 +10,8 @@ const { useBreakpoint } = Grid;
 function Navbar() {
   const { token } = useToken();
   const screens = useBreakpoint();
-  const [current, setCurrent] = useState("projects");
+  const [current, setCurrent] = useState("home");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const menuItems = [
     {
@@ -37,16 +39,36 @@ function Navbar() {
     {
       label: "Auction",
       key: "auction",
-    }
+    },
   ];
-
 
   const onClick = (e: any) => {
     console.log("click ", e);
     setCurrent(e.key);
+
+    // Perform navigation based on the menu item clicked
+    switch (e.key) {
+      case "home":
+        navigate("/");
+        break;
+      case "dashboard":
+        navigate("/dashboard");
+        break;
+      case "cropDetection":
+        navigate("/detection/crop");
+        break;
+      case "plantDiseaseDetection":
+        navigate("/detection/plant-disease");
+        break;
+      case "auction":
+        navigate("/auction");
+        break;
+      default:
+        navigate("/");
+    }
   };
 
-  const styles: React.CSSProperties = {
+  const styles: { [key: string]: React.CSSProperties } = {
     container: {
       display: "flex",
       alignItems: "center",
