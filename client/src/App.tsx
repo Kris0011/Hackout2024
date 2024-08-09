@@ -1,9 +1,20 @@
-import Navbar from "./components/Navbar";
+import { SocketComp } from "./component/SocketComp";
+
 
 export default function App() {
+
+
+
+
+
   return (
     <div>
-      <Navbar />
+      
+
+
+      App
+      <SocketComp/>
+
     </div>
   )
 }
