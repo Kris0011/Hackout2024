@@ -63,8 +63,8 @@ export default function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/detection/crop" element={<CropDetection />} />
           <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
-          <Route path="/auction" element={<Auction />} />
-          <Route path="/auction/:id" element={<AuctionRoom />} />
+          <Route path="/market" element={<Auction />} />
+          <Route path="/market/:id" element={<AuctionRoom />} />
           {/* <Route path="/auction" element={<Auction />} /> */}
           <Route path="/fire-predictor" element={<FireDetection />} />
         </Routes>

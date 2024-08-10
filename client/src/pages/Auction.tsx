@@ -59,7 +59,7 @@ function Auction() {
         auctionId: data._id,
         user: user.user,
       });
-      navigate(`/auction/${data._id}`);
+      navigate(`/market/${data._id}`);
       
 
     } catch (err) {
@@ -99,14 +99,14 @@ function Auction() {
       />
       <div className="text-center mb-8">
         <Title level={1} className="text-4xl font-bold text-gray-900">
-          Live Auctions
+          Live Marketplace
         </Title>
       </div>
       <div className="text-center mb-6">
         <AddAuctionButton />
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <div className="">
         <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4">
           Active Auctions
         </Title>
@@ -160,7 +160,7 @@ function Auction() {
         </Row>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <div className="">
         <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4">
           Inactive Auctions
         </Title>
@@ -211,7 +211,7 @@ function Auction() {
         </Row>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="">
         <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4">
           Completed Auctions
         </Title>
