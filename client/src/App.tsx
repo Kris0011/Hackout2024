@@ -53,7 +53,7 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Router>
         <Toaster />
         <Navbar />

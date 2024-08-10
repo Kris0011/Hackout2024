@@ -1,5 +1,5 @@
-import { useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation, NavLink } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
@@ -7,9 +7,9 @@ import DropDown from './Auth/DropDown';
 import i18n from 'i18next';
 
 function Navbar() {
-  const [current, setCurrent] = useState('home');
   const [language, setLanguage] = useState('English');
   const navigate = useNavigate(); 
+  const location = useLocation();
   const { user } = useSelector((state: any) => state.user);
   const { lang } = useSelector((state: any) => state.user);
 
@@ -33,12 +33,6 @@ function Navbar() {
   ];
 
   const handleAdvancedToolsClick = (route: string) => {
-    setCurrent('tool');
-    navigate(route);
-  };
-
-  const handleClick = (key: string, route: string) => {
-    setCurrent(key);
     navigate(route);
   };
 
@@ -56,7 +50,6 @@ function Navbar() {
 
     i18n.changeLanguage(languageCode);
     console.log(languageCode);
-    
   }, [language]);
 
   const advancedToolsMenu = (
@@ -88,14 +81,17 @@ function Navbar() {
         </div>
         <ul className="flex space-x-4 text-white">
           {items.map((item) => (
-            <li
-              key={item.key}
-              className={`cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300 ${
-                current === item.key ? 'bg-gray-600' : 'hover:bg-gray-700'
-              }`}
-              onClick={() => handleClick(item.key, item.route)}
-            >
-              {item.label}
+            <li key={item.key}>
+              <NavLink
+                to={item.route}
+                className={({ isActive }) => 
+                  `cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300 ${
+                    isActive ? 'bg-gray-600' : 'hover:bg-gray-700'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
             </li>
           ))}
         </ul>

@@ -4,3 +4,16 @@
 @tailwind variants;
 /* In your src/index.css or similar */
 @import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+/* index.css or App.css */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
