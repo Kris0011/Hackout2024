@@ -13,7 +13,7 @@ const AddAuctionButton = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  // console.log(user?.user?.email);
+
   const handleOk = async () => {
     try {
       await handlecreateauction(); 
@@ -42,11 +42,12 @@ const AddAuctionButton = () => {
         startDate: formValues.startDate,
         endDate: formValues.endDate,
         status: "active",
-        sellers:user?.user?.email, 
+        sellers: user?.user?.email, 
       };
-      // console.log(auctionObject.sellers)
+
       console.log("Auction Object:", auctionObject);
 
+      // Send the auction object to the server
       const res = await axios.post("http://localhost:3000/api/createauctions", auctionObject, { withCredentials: true });
       console.log("Auction created successfully:", res.data);
     } catch (error) {
@@ -54,9 +55,9 @@ const AddAuctionButton = () => {
     }
   };
 
-  // const handleFileChange = ({ fileList: newFileList }: any) => {
-  //   setFileList(newFileList);
-  // };
+  const handleFileChange = ({ fileList: newFileList }: any) => {
+    setFileList(newFileList);
+  };
 
   return (
     <>
@@ -103,6 +104,8 @@ const AddAuctionButton = () => {
             <Upload
               listType="picture"
               showUploadList={true}
+              fileList={fileList}
+              onChange={handleFileChange}
               beforeUpload={() => false}
             >
               <Button icon={<UploadOutlined />}>Upload</Button>

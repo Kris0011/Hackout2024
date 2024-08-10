@@ -89,6 +89,7 @@ function Auction() {
     socket.on('connect', () => {
       console.log('Connected to server');
     });
+
     return () => {
       socket.off('connect');
     };
@@ -193,3 +194,4 @@ function Auction() {
 }
 
 export default Auction;
+
