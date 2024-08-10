@@ -39,7 +39,7 @@ export default function App() {
           type: "CLEAR_USER",
         });
         return;
-      }
+      }    
 
       dispatch({
         type: "SET_USER",

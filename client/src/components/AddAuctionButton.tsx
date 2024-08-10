@@ -1,32 +1,62 @@
-import React, { useState } from 'react';
-import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button, Select } from 'antd';
+import { useState } from 'react';
+import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button } from 'antd';
 import { PlusCircleFilled, UploadOutlined } from '@ant-design/icons';
-import { RcFile } from 'antd/es/upload';
-
-const { Option } = Select;
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const AddAuctionButton = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const [fileList, setFileList] = useState<any>([]);
+  const { user }  = useSelector((state: any) => state.user);
 
   const showModal = () => {
-    setIsModalVisible(true);
+    setIsModalOpen(true);
   };
-
+  // console.log(user?.user?.email);
   const handleOk = async () => {
     try {
-      const values = await form.validateFields();
-      console.log('Form values:', values);
-      // TODO: Handle form submission here
-      setIsModalVisible(false);
+      await handlecreateauction(); 
+      setIsModalOpen(false);
+      form.resetFields();
     } catch (error) {
       console.error('Form validation failed:', error);
     }
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsModalOpen(false);
+    form.resetFields();
   };
+
+  const handlecreateauction = async () => {
+    try {
+      const formValues = form.getFieldsValue();
+
+      const auctionObject = {
+        title: formValues.title,
+        description: formValues.description,
+        cropImg: formValues.cropImage,
+        startingPrice: formValues.startingPrice,
+        currentPrice: formValues.startingPrice,
+        startDate: formValues.startDate,
+        endDate: formValues.endDate,
+        status: "active",
+        sellers:user?.user?.email, 
+      };
+      // console.log(auctionObject.sellers)
+      console.log("Auction Object:", auctionObject);
+
+      const res = await axios.post("http://localhost:3000/api/createauctions", auctionObject, { withCredentials: true });
+      console.log("Auction created successfully:", res.data);
+    } catch (error) {
+      console.error("Failed to create auction:", error);
+    }
+  };
+
+  // const handleFileChange = ({ fileList: newFileList }: any) => {
+  //   setFileList(newFileList);
+  // };
 
   return (
     <>
@@ -39,7 +69,7 @@ const AddAuctionButton = () => {
 
       <Modal
         title="Create Auction"
-        visible={isModalVisible}
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         okText="Submit"
@@ -48,7 +78,6 @@ const AddAuctionButton = () => {
         <Form
           form={form}
           layout="vertical"
-          initialValues={{ remember: true }}
         >
           <Form.Item
             name="title"
@@ -69,14 +98,12 @@ const AddAuctionButton = () => {
           <Form.Item
             name="cropImage"
             label="Crop Image"
-            valuePropName="fileList"
-            getValueFromEvent={({ file }) => file}
             extra="Upload an image of the crop"
           >
-            <Upload 
-              action="/upload" 
+            <Upload
               listType="picture"
-              showUploadList={false}
+              showUploadList={true}
+              beforeUpload={() => false}
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
@@ -95,10 +122,7 @@ const AddAuctionButton = () => {
             label="Start Date"
             rules={[{ required: true, message: 'Please select the start date!' }]}
           >
-            <DatePicker
-              format="DD-MM-YYYY"
-              style={{ width: '100%' }}
-            />
+            <DatePicker format="DD-MM-YYYY" style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item
@@ -106,10 +130,7 @@ const AddAuctionButton = () => {
             label="End Date"
             rules={[{ required: true, message: 'Please select the end date!' }]}
           >
-            <DatePicker
-              format="DD-MM-YYYY"
-              style={{ width: '100%' }}
-            />
+            <DatePicker format="DD-MM-YYYY" style={{ width: '100%' }} />
           </Form.Item>
         </Form>
       </Modal>
