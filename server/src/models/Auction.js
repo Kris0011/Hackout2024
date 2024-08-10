@@ -10,9 +10,9 @@ const AuctionSchema = new Schema({
     type: String,
     required: true,
   },
-  cropimgurl: {
-    type: String,
-    required: true,
+  cropImage: {
+    publicId : String,
+    url : String,
   },
   startingPrice: {
     type: Number,
