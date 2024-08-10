@@ -1,13 +1,14 @@
-const Auction = require("../models/Auction");
-const User = require("../models/User");
-const Bid = require("../models/Bid");
-const { finduserbyemail } = require("./user");
+import { Auction } from "../models/Auction.js";
+import { User } from "../models/User.js";
+import { Bid } from "../models/Bid.js";
 
-exports.createAuction = async (req, res) => {
+import { findUserByEmail } from "./user.js";
+
+const createAuction = async (req, res) => {
   try {
-    const { title, description, cropImage, startingPrice, startDate, endDate } =
-      req.body;
-    const seller = finduserbyemail(req.user_email);
+    const { title, description, cropImage, startingPrice, startDate, endDate } = req.body;
+    
+    const seller = findUserByEmail(req.user_email);
 
 
     const auction = new Auction({
@@ -29,21 +30,25 @@ exports.createAuction = async (req, res) => {
     await user.save();
 
     res.status(201).json({ auction });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(500).json({ message: error.message });
   }
 };
 
-exports.getAuctions = async (req, res) => {
+const getAuctions = async (req, res) => {
   try {
     const auctions = await Auction.find().populate("seller").populate("winner");
     res.status(200).json({ auctions });
-  } catch (error) {
+  } 
+  catch (error)
+  {
     res.status(500).json({ message: error.message });
   }
 };
 
-exports.getAuction = async (req, res) => {
+const getAuction = async (req, res) => {
   try {
     const auction = await Auction.findById(req.params.id)
       .populate("seller")
@@ -55,7 +60,7 @@ exports.getAuction = async (req, res) => {
   }
 };
 
-exports.updateAuctionByBid = async (req, res) => {
+const updateAuctionByBid = async (req, res) => {
     try {
         const { amount } = req.body;
         const auction = await Auction.findById(req.params.id).populate("bids");
@@ -109,7 +114,7 @@ exports.updateAuctionByBid = async (req, res) => {
     }
 }
 
-exports.updateAuction = async (req, res) => {
+const updateAuction = async (req, res) => {
     try {
         const { title, description, cropImage, startingPrice, startDate, endDate } =
         req.body;
@@ -129,3 +134,5 @@ exports.updateAuction = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export { createAuction, getAuctions, getAuction, updateAuctionByBid, updateAuction };

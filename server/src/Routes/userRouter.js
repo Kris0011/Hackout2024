@@ -1,8 +1,7 @@
 import pkg from 'express-openid-connect';  
 const { requiresAuth } = pkg;
 import express from 'express';
-import ApiResponse from "../utills/ApiResponse.js";
-import {  getuser, userLoginCallback } from '../controllers/user.js';
+import { userLoginCallback,getuser } from '../controllers/user.js';
 
 const userRouter = express.Router();
 

@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button } from 'antd';
-import { PlusCircleFilled } from '@ant-design/icons';
-import { UploadOutlined } from '@ant-design/icons';
+import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button, Select } from 'antd';
+import { PlusCircleFilled, UploadOutlined } from '@ant-design/icons';
+import { RcFile } from 'antd/es/upload';
+
+const { Option } = Select;
 
 const AddAuctionButton = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm();
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-    //TODO Handle form submission here
+  const handleOk = async () => {
+    try {
+      const values = await form.validateFields();
+      console.log('Form values:', values);
+      // TODO: Handle form submission here
+      setIsModalVisible(false);
+    } catch (error) {
+      console.error('Form validation failed:', error);
+    }
   };
 
   const handleCancel = () => {
@@ -37,16 +46,24 @@ const AddAuctionButton = () => {
         cancelText="Cancel"
       >
         <Form
+          form={form}
           layout="vertical"
           initialValues={{ remember: true }}
-          onFinish={handleOk}
         >
           <Form.Item
-            name="auctionName"
-            label="Auction Name"
-            rules={[{ required: true, message: 'Please input the auction name!' }]}
+            name="title"
+            label="Auction Title"
+            rules={[{ required: true, message: 'Please input the auction title!' }]}
           >
-            <Input placeholder="Enter auction name" />
+            <Input placeholder="Enter auction title" />
+          </Form.Item>
+
+          <Form.Item
+            name="description"
+            label="Description"
+            rules={[{ required: true, message: 'Please input the auction description!' }]}
+          >
+            <Input.TextArea placeholder="Enter auction description" rows={4} />
           </Form.Item>
 
           <Form.Item
@@ -66,23 +83,33 @@ const AddAuctionButton = () => {
           </Form.Item>
 
           <Form.Item
-            name="date"
-            label="Auction Date"
-            rules={[{ required: true, message: 'Please select the auction date!' }]}
+            name="startingPrice"
+            label="Starting Price"
+            rules={[{ required: true, message: 'Please input the starting price!' }]}
+          >
+            <Input type="number" placeholder="Enter starting price" />
+          </Form.Item>
+
+          <Form.Item
+            name="startDate"
+            label="Start Date"
+            rules={[{ required: true, message: 'Please select the start date!' }]}
           >
             <DatePicker
-              format="YYYY-MM-DD"
-              
+              format="DD-MM-YYYY"
               style={{ width: '100%' }}
             />
           </Form.Item>
 
           <Form.Item
-            name="startingBid"
-            label="Starting Bid"
-            rules={[{ required: true, message: 'Please input the starting bid!' }]}
+            name="endDate"
+            label="End Date"
+            rules={[{ required: true, message: 'Please select the end date!' }]}
           >
-            <Input type="number" placeholder="Enter starting bid" />
+            <DatePicker
+              format="DD-MM-YYYY"
+              style={{ width: '100%' }}
+            />
           </Form.Item>
         </Form>
       </Modal>
