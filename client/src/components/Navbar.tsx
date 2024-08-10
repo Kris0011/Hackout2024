@@ -4,8 +4,6 @@ import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import Logo from "../assets/LOGO.png";
 import { useNavigate } from "react-router-dom"; 
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { toast } from "react-hot-toast";
 import DropDown from "./Auth/DropDown";
 
 const { useToken } = theme;

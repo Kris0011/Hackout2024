@@ -2,10 +2,14 @@ import { useEffect } from 'react';
 import AddAuctionButton from '../components/AddAuctionButton'; 
 import { useSocket } from '../context/SocketContext'
 import { Card, Col, Row, Typography } from 'antd';
+import { useSelector } from 'react-redux';
+
 import Orange from "../assets/oranges.jpg";
 import Apple from "../assets/Apple.jpg";
 import Tomato from "../assets/tomato.jpg";
 import Banana from "../assets/banana.jpg";
+import axios from "axios";
+
 
 const { Title, Text } = Typography;
 
@@ -62,6 +66,18 @@ const dummyAuctions = [
   }
 ];
 
+useEffect(()=>{
+  const user = useSelector((state: any) => state.isAuthenticated.user);
+  if (!user) {
+    console.log('User is not logged in');
+  }
+
+  axios.get("http://localhost:5000/api/auctions").then((res) => {
+    console.log(res.data);
+  });
+
+  }, []);
+
 function Auction() {
   const socket = useSocket();
   if (!socket) return <Title level={2}>Loading ...</Title>;
@@ -76,6 +92,7 @@ function Auction() {
     };
   }, [socket]);
 
+  
   // Filter auctions based on their status
   const activeAuctions = dummyAuctions.filter(auction => auction.status === 'active');
   const inactiveAuctions = dummyAuctions.filter(auction => auction.status === 'inactive');
