@@ -5,7 +5,6 @@ import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
 import DropDown from './Auth/DropDown';
 import i18n from 'i18next';
-import Icon from '@ant-design/icons/lib/components/Icon';
 import { DownOutlined } from '@ant-design/icons';
 
 function Navbar() {
@@ -83,14 +82,17 @@ function Navbar() {
         </div>
         <ul className="flex space-x-4 text-white">
           {items.map((item) => (
-            <li
-              key={item.key}
-              className={`cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300  ${
-                current === item.key ? 'bg-gray-600' : 'hover:bg-gray-700'
-              }`}
-              onClick={() => handleClick(item.key, item.route)}
-            >
-              {item.label}
+            <li key={item.key}>
+              <NavLink
+                to={item.route}
+                className={({ isActive }) =>
+                  `cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300 ${
+                    isActive ? 'bg-gray-600' : 'hover:bg-gray-700'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -111,7 +113,7 @@ function Navbar() {
               <DropDown />
             ) : (
               <a href="http://localhost:3000/login">
-                <Button type="primary">Login</Button>
+                <button className='bg-orange-500 text-white py-2 px-6 rounded-lg font-bold hover:bg-orange-600 transition duration-300'>Login</button>
               </a>
             )}
           </div>

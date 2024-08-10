@@ -1,4 +1,3 @@
-import React from 'react';
 import { GithubFilled } from '@ant-design/icons';
 
 const Footer = () => {
@@ -7,17 +6,20 @@ const Footer = () => {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col items-center">
                     <h2 className="text-xl font-semibold mb-2 text-gray-100">Meet the Team</h2>
-                    <div className="flex flex-wrap justify-center gap-2 mb-4">
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-gray-100 transition">
+                    <div className="flex flex-wrap justify-center items-center gap-2 mb-4">
+                        <a href="#" target="_blank" rel="noopener noreferrer" className="team-member flex items-center text-gray-300 hover:text-gray-100 transition">
                             <GithubFilled className="text-lg mr-2" /> Kris Patel
                         </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-gray-100 transition">
+                        |
+                        <a href="#" target="_blank" rel="noopener noreferrer" className="team-member flex items-center text-gray-300 hover:text-gray-100 transition">
                             <GithubFilled className="text-lg mr-2" /> Naitik Patel
                         </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-gray-100 transition">
+                        |
+                        <a href="#" target="_blank" rel="noopener noreferrer" className="team-member flex items-center text-gray-300 hover:text-gray-100 transition">
                             <GithubFilled className="text-lg mr-2" /> Udit Mehta
                         </a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-gray-100 transition">
+                        |
+                        <a href="#" target="_blank" rel="noopener noreferrer" className="team-member flex items-center text-gray-300 hover:text-gray-100 transition">
                             <GithubFilled className="text-lg mr-2" /> Vraj Patel
                         </a>
                     </div>
