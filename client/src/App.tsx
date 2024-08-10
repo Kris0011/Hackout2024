@@ -56,6 +56,11 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/detection/crop" element={<CropDetection />} />
+          <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
+          <Route path="/auction" element={<Auction />} />
+
         </Routes>
       </Router>
     </div>
