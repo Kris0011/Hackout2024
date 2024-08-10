@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Select, Button, Card, Row, Col, Typography, message } from 'antd';
+import axios from 'axios';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -11,7 +12,18 @@ function CropDetection() {
   const onFinish = (values: any) => {
     // TODO: Handle form submission
     console.log('Form values:', values);
-    message.success('Form submitted successfully!');
+    
+
+    try{
+      const res = axios.post("http://127.0.0.1:5000/fertilizer/predict", values);
+      // console.log(res.data.);
+
+    }
+    catch (error){
+      console.error("Failed to fetch fertilizer recommendations:", error)
+    }
+
+    // message.success('Form submitted successfully!');
   };
 
   return (
