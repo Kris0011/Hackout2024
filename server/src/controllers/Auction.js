@@ -1,6 +1,6 @@
 import { Auction } from "../models/Auction.js";
 import { User } from "../models/User.js";
-import { Bid } from "../models/Bid.js";
+
 // import { uploadoncloudinary } from "../utills/Cloudinary.js";
 
 import { v2 as cloudinary } from "cloudinary";
@@ -95,59 +95,6 @@ const getAuction = async (req, res) => {
   }
 };
 
-const updateAuctionByBid = async (req, res) => {
-  try {
-    const { amount } = req.body;
-    const auction = await Auction.findById(req.params.id).populate("bids");
-
-    if (auction.status === "closed") {
-      return res.status(400).json({ message: "Auction is closed" });
-    }
-
-    if (amount <= auction.currentPrice) {
-      return res
-        .status(400)
-        .json({ message: "Bid amount should be greater than current price" });
-    }
-
-    const bid = new Bid({
-      amount,
-      bidder: req.user.id,
-    });
-
-    await bid.save();
-
-    auction.bids.push(bid._id);
-    auction.currentPrice = amount;
-    await auction.save();
-
-    const user = await User.findById(req.user.id);
-    user.bids.push(bid._id);
-    await user.save();
-
-    res.status(200).json({ auction });
-
-    if (new Date() > auction.endDate) {
-      auction.status = "closed";
-      await auction.save();
-
-      const winnerBid = await Bid.findOne({ amount: auction.currentPrice });
-
-      if (winnerBid) {
-        const winner = await User.findById(winnerBid.bidder);
-        auction.winner = winner._id;
-        auction.winnerBid = winnerBid._id;
-        await auction.save();
-
-        winner.bids.push(winnerBid._id);
-        winner.save();
-      }
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
 const updateAuction = async (req, res) => {
   try {
     const { title, description, cropImage, startingPrice, startDate, endDate } =
@@ -173,6 +120,5 @@ export {
   createAuction,
   getAuctions,
   getAuction,
-  updateAuctionByBid,
   updateAuction,
 };
