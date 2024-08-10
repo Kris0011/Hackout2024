@@ -1,10 +1,8 @@
 import { Auction } from "../models/Auction.js";
 import { User } from "../models/User.js";
-import { Bid } from "../models/Bid.js";
-// import { uploadoncloudinary } from "../utills/Cloudinary.js";
-
 import { v2 as cloudinary } from "cloudinary";
-// const cloudinary = require('cloudinary').v2;
+import { uploadoncloudinary } from "../utills/Cloudinary.js";
+
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -12,63 +10,46 @@ cloudinary.config({
 });
 
 const createAuction = async (req, res) => {
+  console.log(req.body);
   try {
-    console.log(req.body);
-    // const {
-    //   title,
-    //   description,
-    //   startingPrice,
-    //   startDate,
-    //   endDate,
-    //   status,
-    //   seller,
-    //   cropImg ,
-    //   currentPrice,
-    // } = req.body;
-    // console.log("sd" + title+ description);
+    const {
+      title,
+      description,
+      startingPrice,
+      startDate,
+      endDate,
+      status,
+      seller,
+      cropImg,
+    } = req.body;
 
-    // console.log(cropImg?.fileList[0]?.thumbUrl)
-    // const cropimgurl= await uploadoncloudinary(cropImg?.fileList[0]?.thumburl);
-    console.log("inside create auction " , cropImg , seller);
-    let public_id = "public_id";
-    let url = "url";
-    let desc = "This is description";
+    
+    const cropImageUrl = await uploadoncloudinary("https://s.gravatar.com/avatar/71c1614625bf6ea2fa43df4257ab2893?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fkr.png");
 
-    // console.log(req.body.cropImage.file);
-    //     await cloudinary.uploader.upload(req.file.cropImage, (err, result) => {
-    //         if (err) {
-    //             console.log("error is " +err);
-    //         }
-    //         console.log(result)
-    //         url = result.url;
-    //         public_id = result.public_id;
+    const user = await User.findOne({ email: seller });
 
-    //         console.log("url : ", url);
-    //         console.log("public_id : ", public_id);
-    // });
+    if (!user) {
+      return res.status(404).json({ message: "Seller not found" });
+    }
 
-    // const user = await User.find({
-    //   email:seller
-    // });
+    const auction = new Auction({
+      title,
+      description,
+      cropImageUrl,
+      startingPrice,
+      currentPrice: startingPrice,
+      startDate,
+      endDate,
+      status,
+      seller: user._id,
+    });
 
-    // const auction = Auction.create({
-    //   title,
-    //   description,
-    //   cropimgurl,
-    //   startingPrice,
-    //   currentPrice: startingPrice,
-    //   startDate,
-    //   endDate,
-    //   status,
-    //   seller : user,
-    // });
+    const savedAuction = await auction.save();
 
-    // const auctions = await auction.save();
+    user.auctions.push(savedAuction._id);
+    await user.save();
 
-    // user.auctions.push(auctions._id);
-    // await user.save();
-
-    // res.status(201).json({ auctions });
+    res.status(201).json({ auction: savedAuction });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -110,7 +91,7 @@ const updateAuctionByBid = async (req, res) => {
         .json({ message: "Bid amount should be greater than current price" });
     }
 
-    const bid = new Bid({
+    const bid = new bid({
       amount,
       bidder: req.user.id,
     });
