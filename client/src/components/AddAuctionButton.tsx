@@ -1,31 +1,62 @@
-import React, { useState } from 'react';
-import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button, Select } from 'antd';
+import { useState } from 'react';
+import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button } from 'antd';
 import { PlusCircleFilled, UploadOutlined } from '@ant-design/icons';
-import { RcFile } from 'antd/es/upload';
-
-const { Option } = Select;
+import axios from 'axios';
 
 const AddAuctionButton = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const [auctionData, setAuctionData] = useState({
+    title: '',
+    description: '',
+    cropImage: null,
+    startingPrice: '',
+    startDate: null,
+    endDate: null,
+  });
 
   const showModal = () => {
-    setIsModalVisible(true);
+    setIsModalOpen(true);
   };
 
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
       console.log('Form values:', values);
-      // TODO: Handle form submission here
-      setIsModalVisible(false);
+
+      setAuctionData({
+        title: values.title,
+        description: values.description,
+        cropImage: values.cropImage ? values.cropImage.fileList[0] : null,
+        startingPrice: values.startingPrice,
+        startDate: values.startDate ? values.startDate.format('YYYY-MM-DD') : null,
+        endDate: values.endDate ? values.endDate.format('YYYY-MM-DD') : null,
+      });
+    
+
+      setIsModalOpen(false);
+      form.resetFields();
     } catch (error) {
       console.error('Form validation failed:', error);
     }
   };
 
+  const onclickauction = async () => {
+    await createAuction();
+  }
+
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setIsModalOpen(false);
+    form.resetFields();
+  };
+
+  const createAuction = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/auctions', auctionData);
+      console.log("Auction created successfully", response.data);
+    } catch (error) {
+      console.error("Error creating auction:", error);
+    }
   };
 
   return (
@@ -39,7 +70,7 @@ const AddAuctionButton = () => {
 
       <Modal
         title="Create Auction"
-        visible={isModalVisible}
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         okText="Submit"
@@ -48,7 +79,7 @@ const AddAuctionButton = () => {
         <Form
           form={form}
           layout="vertical"
-          initialValues={{ remember: true }}
+          onSubmitCapture={onclickauction}
         >
           <Form.Item
             name="title"
@@ -70,11 +101,11 @@ const AddAuctionButton = () => {
             name="cropImage"
             label="Crop Image"
             valuePropName="fileList"
-            getValueFromEvent={({ file }) => file}
+            getValueFromEvent={({ fileList }) => ({ fileList })}
             extra="Upload an image of the crop"
           >
-            <Upload 
-              action="/upload" 
+            <Upload
+              beforeUpload={() => false} 
               listType="picture"
               showUploadList={false}
             >
@@ -95,10 +126,7 @@ const AddAuctionButton = () => {
             label="Start Date"
             rules={[{ required: true, message: 'Please select the start date!' }]}
           >
-            <DatePicker
-              format="DD-MM-YYYY"
-              style={{ width: '100%' }}
-            />
+            <DatePicker format="DD-MM-YYYY" style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item
@@ -106,10 +134,7 @@ const AddAuctionButton = () => {
             label="End Date"
             rules={[{ required: true, message: 'Please select the end date!' }]}
           >
-            <DatePicker
-              format="DD-MM-YYYY"
-              style={{ width: '100%' }}
-            />
+            <DatePicker format="DD-MM-YYYY" style={{ width: '100%' }} />
           </Form.Item>
         </Form>
       </Modal>
