@@ -177,7 +177,7 @@ function Navbar() {
             user &&  
             <div>
                 <DropDown />
-                {/* <a href="http://localhost:3000/logout"><Button type="dashed">Logout</Button></a>  */}
+                <a href="http://localhost:3000/logout"><Button type="dashed">Logout</Button></a>
 
             </div>
             
@@ -187,10 +187,7 @@ function Navbar() {
             !user && 
             <a href="http://localhost:3000/login"><Button type="primary">Login</Button></a>
          }
-      
-       
-           
-          
+  
           
         </div>
       </div>
