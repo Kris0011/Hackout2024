@@ -15,7 +15,6 @@ const LocationForm: React.FC = () => {
   const [location, setLocation] = useState<Location>({ lat: null, lng: null });
 
   useEffect(() => {
-    // Attempt to get the user's current location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -24,12 +23,10 @@ const LocationForm: React.FC = () => {
         },
         (error) => {
           console.error('Error getting location:', error);
-          // Handle error or fallback location here if needed
         }
       );
     } else {
       console.warn('Geolocation not supported');
-      // Handle fallback here if needed
     }
   }, []);
 
