@@ -29,7 +29,9 @@ exports.createAuction = async (req, res) => {
     await user.save();
 
     res.status(201).json({ auction });
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     res.status(500).json({ message: error.message });
   }
 };
@@ -38,7 +40,9 @@ exports.getAuctions = async (req, res) => {
   try {
     const auctions = await Auction.find().populate("seller").populate("winner");
     res.status(200).json({ auctions });
-  } catch (error) {
+  } 
+  catch (error)
+  {
     res.status(500).json({ message: error.message });
   }
 };

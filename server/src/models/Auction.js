@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const AuctionSchema = new Schema({
@@ -34,6 +34,10 @@ const AuctionSchema = new Schema({
     type: String,
     required: true,
   },
+  winner: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User"
+  },
   bids: [
     {
       type: Schema.Types.ObjectId,
@@ -42,10 +46,6 @@ const AuctionSchema = new Schema({
   ],
 
   seller: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-  winner: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
