@@ -25,19 +25,12 @@ export default function App() {
           type: "CLEAR_USER",
         });
         return;
-      }
-
-
-     
-
-    
+      }    
 
       dispatch({
         type: "SET_USER",
         payload: res.data,
       });
-
-
 
       console.log(res.data);
     } catch (err) {

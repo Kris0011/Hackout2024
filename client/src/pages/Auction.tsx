@@ -3,7 +3,7 @@ import AddAuctionButton from '../components/AddAuctionButton';
 import { useSocket } from '../context/SocketContext'
 import { Card, Col, Row, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-
+//TODO: Remove dummy data
 import Orange from "../assets/oranges.jpg";
 import Apple from "../assets/Apple.jpg";
 import Tomato from "../assets/tomato.jpg";
@@ -66,17 +66,17 @@ const dummyAuctions = [
   }
 ];
 
-useEffect(()=>{
-  const user = useSelector((state: any) => state.isAuthenticated.user);
-  if (!user) {
-    console.log('User is not logged in');
-  }
+// useEffect(()=>{
+//   const user = useSelector((state: any) => state.isAuthenticated.user);
+//   if (!user) {
+//     console.log('User is not logged in');
+//   }
 
-  axios.get("http://localhost:5000/api/auctions").then((res) => {
-    console.log(res.data);
-  });
+//   axios.get("http://localhost:5000/api/auctions").then((res) => {
+//     console.log(res.data);
+//   });
 
-  }, []);
+//   }, []);
 
 function Auction() {
   const socket = useSocket();
