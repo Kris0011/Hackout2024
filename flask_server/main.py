@@ -71,5 +71,9 @@ def get_accuracy():
     report = classification_report(y_test, y_pred)
     return jsonify({'accuracy': accuracy, 'report': report})
 
+@app.route('/') 
+def home():
+    return 'Hello!'
+
 if __name__ == '__main__':
     app.run(debug=True)

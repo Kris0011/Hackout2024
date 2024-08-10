@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import Footer from "./components/Footersection";
 
 export default function App() {
 
@@ -53,9 +54,10 @@ export default function App() {
           <Route path="/detection/crop" element={<CropDetection />} />
           <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
           <Route path="/auction" element={<Auction />} />
-
         </Routes>
+        <Footer />
       </Router>
+
     </div>
   );
 }
