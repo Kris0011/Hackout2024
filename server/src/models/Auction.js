@@ -44,7 +44,6 @@ const AuctionSchema = new Schema({
       ref: "Bid",
     },
   ],
-
   seller: {
     type: Schema.Types.ObjectId,
     ref: "User",
