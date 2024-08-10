@@ -91,12 +91,11 @@ function Auction() {
     : [];
 
   return (
-    <div className="relative p-6 bg-gray-100">
-      <img
-        src={bgImage}
-        alt="Background Image"
-        className="absolute inset-0 w-full h-full object-cover z-[-1]"
-      />
+    <div className="relative p-6 bg-gray-100"
+    
+    
+    >
+      
       <div className="text-center mb-8">
         <Title level={1} className="text-4xl font-bold text-gray-900">
           Live Marketplace
@@ -106,8 +105,8 @@ function Auction() {
         <AddAuctionButton />
       </div>
 
-      <div className="">
-        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4">
+     { activeAuctions.length &&  <div className="max-w-6xl mx-auto">
+        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           Active Auctions
         </Title>
         <Row gutter={16}>
@@ -122,7 +121,7 @@ function Auction() {
                     className="w-full h-48 object-cover"
                   />
                 }
-                className="shadow-lg"
+                className="shadow-lg my-4"
                 onClick={() => {
                   getAuctionRoom(auction);
                 }}
@@ -158,10 +157,10 @@ function Auction() {
             </Col>
           ))}
         </Row>
-      </div>
+      </div> }
 
-      <div className="">
-        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4">
+     { inactiveAuctions.length && <div className="max-w-6xl mx-auto">
+        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           Inactive Auctions
         </Title>
         <Row gutter={16}>
@@ -210,9 +209,10 @@ function Auction() {
           ))}
         </Row>
       </div>
+      }
 
-      <div className="">
-        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4">
+      <div className="max-w-6xl mx-auto ">
+        <Title level={2} className="text-2xl font-semibold text-gray-800 my-10 text-center">
           Completed Auctions
         </Title>
         <Row gutter={16}>
