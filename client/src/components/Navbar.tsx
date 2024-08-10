@@ -9,15 +9,6 @@ import DropDown from "./Auth/DropDown";
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
 
-
-
-
-
-
-
-
-
-
 function Navbar() {
   const { token } = useToken();
   const screens = useBreakpoint();
@@ -29,11 +20,6 @@ function Navbar() {
   const dispatch = useDispatch();
 
   console.log(user);
-
-
-
-
- 
 
   const menuItems = [
     {
@@ -96,11 +82,9 @@ function Navbar() {
         navigate("/auction");
         break;
       case "logout":
-        //TODO Handle logout
         console.log("Logging out");
         break;
       case "loginWithOtherEmail":
-        //TODO Add func for login again
         console.log("Login with other email");
         break;
       default:
