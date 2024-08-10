@@ -19,23 +19,28 @@ const createAuction = async (req, res) => {
       startDate,
       endDate,
       status,
-      seller,
+      sellers,
       cropImg,
     } = req.body;
 
-    
-    const cropImageUrl = await uploadoncloudinary("https://s.gravatar.com/avatar/71c1614625bf6ea2fa43df4257ab2893?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fkr.png");
+    console.log(req.body)
+    console.log(sellers)
+    const user = await User.findOne({ email: sellers });
 
-    const user = await User.findOne({ email: seller });
-
-    if (!user) {
-      return res.status(404).json({ message: "Seller not found" });
+    // if (!user) {
+    //   return res.status(404).json({ message: "Seller not found" });
+    // }
+    let urlimg;
+    // console.log(urlimg);
+    if(req.files && Array.isArray(req.files.urlimg) && req.urlimg.length > 0){
+        urlimg = req.files.urlimg[0].path;
     }
 
+    const localurl = await uploadoncloudinary(urlimg)
     const auction = new Auction({
       title,
       description,
-      cropImageUrl,
+      cropImage:localurl,
       startingPrice,
       currentPrice: startingPrice,
       startDate,
@@ -43,6 +48,8 @@ const createAuction = async (req, res) => {
       status,
       seller: user._id,
     });
+
+ 
 
     const savedAuction = await auction.save();
 
