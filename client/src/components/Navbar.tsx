@@ -5,6 +5,8 @@ import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
 import DropDown from './Auth/DropDown';
 import i18n from 'i18next';
+import Icon from '@ant-design/icons/lib/components/Icon';
+import { DownOutlined } from '@ant-design/icons';
 
 function Navbar() {
   const [language, setLanguage] = useState('English');
@@ -24,7 +26,7 @@ function Navbar() {
   const items = [
     { label: 'Home', key: 'home', route: '/' },
     { label: 'Dashboard', key: 'dashboard', route: '/dashboard' },
-    { label: 'Auction', key: 'auction', route: '/auction' },
+    { label: 'Market', key: 'market', route: '/market' },
   ];
 
   const languageItems = [
@@ -81,29 +83,27 @@ function Navbar() {
         </div>
         <ul className="flex space-x-4 text-white">
           {items.map((item) => (
-            <li key={item.key}>
-              <NavLink
-                to={item.route}
-                className={({ isActive }) => 
-                  `cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300 ${
-                    isActive ? 'bg-gray-600' : 'hover:bg-gray-700'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
+            <li
+              key={item.key}
+              className={`cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300  ${
+                current === item.key ? 'bg-gray-600' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => handleClick(item.key, item.route)}
+            >
+              {item.label}
             </li>
           ))}
         </ul>
         <div className='flex flex-row space-x-3'>
           <Dropdown overlay={languageMenu}>
-            <Button>
+            <Button size="large">
               {language}
             </Button>
           </Dropdown>
           <Dropdown overlay={advancedToolsMenu}>
-            <Button>
+            <Button size='large'>
               Advanced Tools
+              <DownOutlined />
             </Button>
           </Dropdown>
           <div>

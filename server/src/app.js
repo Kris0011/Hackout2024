@@ -5,6 +5,7 @@ import  userRouter  from './Routes/userRouter.js';
 import http from 'http';
 import { Server } from 'socket.io';
 import AuctionRouter from './Routes/AuctionRouter.js';
+import { Auction } from './models/Auction.js';
 
 const app = express();
 
@@ -45,11 +46,47 @@ const io = new Server(server, {
 io.on("connection", socket => {
 	
 
-	console.log("User connected");
 
 	socket.on("disconnect", () => {
          console.log("User disconnected");
 	});
+
+  socket.on("join-room" , (data) => {
+		console.log("Join Auction", data);
+		socket.join(data.auctionId);
+	})
+
+  socket.on('placeBid',async (data) => {
+
+    console.log(data.bidder);
+        
+    const currentAuction = await Auction.findById(data.auction._id);
+    // console.log(data);
+
+    if (!currentAuction) {
+      console.error(`Auction with ID ${data.auctionId} not found`);
+      return;
+  }
+    
+        if(currentAuction) {
+        currentAuction.bidPrice += data.bidAmount;
+        }
+        // currentAuction.winner = data.bidder;
+
+    await currentAuction.save();
+
+    socket.emmit("bidPlaced",data);
+
+
+    
+    io.to(data.auction._id).emit('updateAuction',{updatedAuction: currentAuction,bidder:data.bidder})
+    }
+
+    
+
+)
+
+
 
 });
 

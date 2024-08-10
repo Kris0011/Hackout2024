@@ -6,6 +6,7 @@ const store = configureStore({
   reducer: {
     user: userReducer as any,
     isAuthenticated: userReducer as any,
+    auction : userReducer as any,
     lang:userReducer as any,
   },
 });

@@ -48,6 +48,19 @@ export const findUserByEmail = async (email) => {
     return await User.findOne({ email });
 }
 
+export const getUserById = async (req,res) => {
+    try {
+        const { id } = req.body;
+        const user
+            = await User.findById(id);
+        return res.status(200).json({ user });
+    }
+    catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 export const getuser = async (req,res) => {
     try {
         // if (req.oidc.isAuthenticated()) {

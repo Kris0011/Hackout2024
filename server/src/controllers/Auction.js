@@ -13,7 +13,7 @@ cloudinary.config({
 });
 
 const createAuction = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const {
       title,
@@ -77,12 +77,23 @@ const getAuctions = async (req, res) => {
 const getAuction = async (req, res) => {
   try {
     const auction = await Auction.findById(req.params.id)
-      .populate("seller")
-      .populate("winner")
-      .populate("bids");
+      // .populate("seller")
+      // .populate("winner")
+      // .populate("bids");
     res.status(200).json({ auction });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+const getAuctionById = async (req,res) => {
+  try {
+    const { id } = req.body;
+    const auction = await Auction.findById(id);
+    return res.status(200).json({ auction });
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
 
@@ -112,4 +123,5 @@ export {
   getAuctions,
   getAuction,
   updateAuction,
+  getAuctionById
 };

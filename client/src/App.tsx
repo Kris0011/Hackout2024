@@ -18,6 +18,7 @@ interface Description {
 }
 
 import Footer from "./components/Footersection";
+import AuctionRoom from "./pages/AuctionRoom";
 
 export default function App() {
 
@@ -62,6 +63,8 @@ export default function App() {
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/detection/crop" element={<CropDetection />} />
           <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
+          <Route path="/market" element={<Auction />} />
+          <Route path="/market/:id" element={<AuctionRoom />} />
           {/* <Route path="/auction" element={<Auction />} /> */}
           <Route path="/fire-predictor" element={<FireDetection />} />
         </Routes>
