@@ -18,9 +18,14 @@ const intitalState = {
           user: null,
           isAuthenticated : false
         };
+      case "TOGGLE_LANG":
+        return {
+          ...state,
+          lang: action.payload,
+        };
       default:
         return state;
     }
   };
   
-  export default userReducer;
+export default userReducer;

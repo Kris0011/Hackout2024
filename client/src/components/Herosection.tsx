@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GithubFilled } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import LOGO from '../assets/LOGO.png';
 import bgImage from "../assets/Background.jpeg";
-import LanguageSelector from './language-selector';
 
 const HeroSection = () => {
     const { t } = useTranslation();
 
     return (
         <div>
-            <LanguageSelector />
             <section 
                 className="flex items-center justify-center h-screen bg-cover bg-center text-white"
                 style={{ backgroundImage: `url(${bgImage})` }}
