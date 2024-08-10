@@ -5,6 +5,7 @@ import "./index.css";
 import { SocketProvider } from "./context/SocketContext.tsx";
 import { Provider } from "react-redux";
 import store from "./states/store.ts";
+import "./i18n/i18n.js";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

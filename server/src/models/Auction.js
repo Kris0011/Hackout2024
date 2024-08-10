@@ -11,8 +11,8 @@ const AuctionSchema = new Schema({
     required: true,
   },
   cropImage: {
-    type: String,
-    required: true,
+    publicId : String,
+    url : String,
   },
   startingPrice: {
     type: Number,
