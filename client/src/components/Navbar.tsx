@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
+import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
 import DropDown from './Auth/DropDown';
-import { Menu, Button, Dropdown } from 'antd';
+import i18n from 'i18next';
 
 function Navbar() {
   const [current, setCurrent] = useState('home');
+  const [language, setLanguage] = useState('English');
   const navigate = useNavigate(); 
   const { user } = useSelector((state: any) => state.user);
+  const { lang } = useSelector((state: any) => state.user);
+
   const dispatch = useDispatch(); 
 
   const advancedToolsItems = [
-    { label: 'Fire Predictor', key: 'tool1', route: '/detection/plant-disease' },
+    { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
     { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
     { label: 'Plant Disease Predictor', key: 'tool3', route: '/detection/plant-disease' },
   ];
@@ -23,7 +27,13 @@ function Navbar() {
     { label: 'Auction', key: 'auction', route: '/auction' },
   ];
 
+  const languageItems = [
+    { label: 'English', key: 'en' },
+    { label: 'हिन्दी', key: 'hi' },
+  ];
+
   const handleAdvancedToolsClick = (route: string) => {
+    setCurrent('tool');
     navigate(route);
   };
 
@@ -32,10 +42,37 @@ function Navbar() {
     navigate(route);
   };
 
+  const handleLanguageChange = ({ key }: { key: string }) => {
+    setLanguage(key === 'en' ? 'English' : 'हिन्दी');
+  };
+
+  useEffect(() => {
+    let languageCode;
+    if (language === 'English') {
+        languageCode = 'en';
+    } else {
+        languageCode = 'hi';
+    }
+
+    i18n.changeLanguage(languageCode);
+    console.log(languageCode);
+    
+  }, [language]);
+
   const advancedToolsMenu = (
     <Menu>
       {advancedToolsItems.map(item => (
         <Menu.Item key={item.key} onClick={() => handleAdvancedToolsClick(item.route)}>
+          {item.label}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
+
+  const languageMenu = (
+    <Menu onClick={handleLanguageChange}>
+      {languageItems.map(item => (
+        <Menu.Item key={item.key}>
           {item.label}
         </Menu.Item>
       ))}
@@ -63,21 +100,26 @@ function Navbar() {
           ))}
         </ul>
         <div className='flex flex-row space-x-3'>
+          <Dropdown overlay={languageMenu}>
+            <Button>
+              {language}
+            </Button>
+          </Dropdown>
           <Dropdown overlay={advancedToolsMenu}>
             <Button>
               Advanced Tools
             </Button>
           </Dropdown>
-        <div>
-          {user ? (
-            <DropDown />
-          ) : (
-            <a href="http://localhost:3000/login">
-              <Button type="primary">Login</Button>
-            </a>
-          )}
-        </div>
+          <div>
+            {user ? (
+              <DropDown />
+            ) : (
+              <a href="http://localhost:3000/login">
+                <Button type="primary">Login</Button>
+              </a>
+            )}
           </div>
+        </div>
       </div>
     </nav>
   );

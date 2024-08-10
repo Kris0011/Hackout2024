@@ -111,7 +111,7 @@ function Auction() {
           Active Auctions
         </Title>
         <Row gutter={16}>
-          {activeAuctions.map((auction, index) => (
+          {activeAuctions.map((auction: any, index: any) => (
             <Col span={8} key={index}>
               <Card
                 hoverable
@@ -165,7 +165,7 @@ function Auction() {
           Inactive Auctions
         </Title>
         <Row gutter={16}>
-          {inactiveAuctions.map((auction, index) => (
+          {inactiveAuctions.map((auction: any, index: any) => (
             <Col span={8} key={index}>
               <Card
                 hoverable
@@ -216,7 +216,7 @@ function Auction() {
           Completed Auctions
         </Title>
         <Row gutter={16}>
-          {completedAuctions.map((auction, index) => (
+          {completedAuctions.map((auction: any, index: any) => (
             <Col span={8} key={index}>
               <Card
                 hoverable
