@@ -1,8 +1,10 @@
-const isAuthenticated = async (req, res, next) => {
-    if (await req.oidc.isAuthenticated()) {
-        // return next();
+const isAuthenticated = (req, res, next) => {
+    console.log("hii inside isauthenticated" + req.oidc.isAuthenticated());
+    if (req.oidc.isAuthenticated()) {
+        next();
     }
-    return res.status(401).json({ message: 'Unauthorized' });
+    else
+        return res.status(401).json({ message: 'Unauthorized' });
 }
 
 export { isAuthenticated }; 

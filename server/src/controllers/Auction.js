@@ -1,35 +1,43 @@
 import { Auction } from "../models/Auction.js";
 import { User } from "../models/User.js";
 import { Bid } from "../models/Bid.js";
-
-import { findUserByEmail } from "./user.js";
+import { uploadoncloudinary } from "../utills/Cloudinary.js";
 
 const createAuction = async (req, res) => {
+
   try {
-    const { title, description, cropImage, startingPrice, startDate, endDate } = req.body;
+    console.log(req.body);
+    const { title, description, cropImg, startingPrice,currentPrice, startDate, endDate,status,sellers} = req.body;
+    console.log("sd" + title+ description);
+
+    const seller = await User.find({
+      email:sellers
+    });
     
-    const seller = findUserByEmail(req.user_email);
+    console.log(cropImg?.fileList[0]?.thumbUrl)
+    const cropimgurl= await uploadoncloudinary(cropImg?.fileList[0]?.thumburl);
 
-
-    const auction = new Auction({
+    const auction = Auction.create({
       title,
       description,
-      cropImage,
+      cropimgurl,
       startingPrice,
       currentPrice: startingPrice,
       startDate,
       endDate,
-      status: "active",
+      status,
       seller,
     });
 
-    await auction.save();
+    const auctions = await auction.save();
 
-    const user = await User.findById(seller);
-    user.auctions.push(auction._id);
+    const user = await User.find({
+      email:sellers
+    });
+    user.auctions.push(auctions._id);
     await user.save();
 
-    res.status(201).json({ auction });
+    res.status(201).json({ auctions });
   } 
   catch (error) 
   {

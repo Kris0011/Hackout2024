@@ -2,38 +2,21 @@ import { useState } from 'react';
 import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button } from 'antd';
 import { PlusCircleFilled, UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const AddAuctionButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
-  const [auctionData, setAuctionData] = useState({
-    title: '',
-    description: '',
-    cropImage: null,
-    startingPrice: '',
-    startDate: null,
-    endDate: null,
-  });
+  const [fileList, setFileList] = useState<any>([]);
+  const { user }  = useSelector((state: any) => state.user);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
-
+  // console.log(user?.user?.email);
   const handleOk = async () => {
     try {
-      const values = await form.validateFields();
-      console.log('Form values:', values);
-
-      setAuctionData({
-        title: values.title,
-        description: values.description,
-        cropImage: values.cropImage ? values.cropImage.fileList[0] : null,
-        startingPrice: values.startingPrice,
-        startDate: values.startDate ? values.startDate.format('YYYY-MM-DD') : null,
-        endDate: values.endDate ? values.endDate.format('YYYY-MM-DD') : null,
-      });
-    
-
+      await handlecreateauction(); 
       setIsModalOpen(false);
       form.resetFields();
     } catch (error) {
@@ -41,23 +24,39 @@ const AddAuctionButton = () => {
     }
   };
 
-  const onclickauction = async () => {
-    await createAuction();
-  }
-
   const handleCancel = () => {
     setIsModalOpen(false);
     form.resetFields();
   };
 
-  const createAuction = async () => {
+  const handlecreateauction = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/auctions', auctionData);
-      console.log("Auction created successfully", response.data);
+      const formValues = form.getFieldsValue();
+
+      const auctionObject = {
+        title: formValues.title,
+        description: formValues.description,
+        cropImg: formValues.cropImage,
+        startingPrice: formValues.startingPrice,
+        currentPrice: formValues.startingPrice,
+        startDate: formValues.startDate,
+        endDate: formValues.endDate,
+        status: "active",
+        sellers:user?.user?.email, 
+      };
+      // console.log(auctionObject.sellers)
+      console.log("Auction Object:", auctionObject);
+
+      const res = await axios.post("http://localhost:3000/api/createauctions", auctionObject, { withCredentials: true });
+      console.log("Auction created successfully:", res.data);
     } catch (error) {
-      console.error("Error creating auction:", error);
+      console.error("Failed to create auction:", error);
     }
   };
+
+  // const handleFileChange = ({ fileList: newFileList }: any) => {
+  //   setFileList(newFileList);
+  // };
 
   return (
     <>
@@ -79,7 +78,6 @@ const AddAuctionButton = () => {
         <Form
           form={form}
           layout="vertical"
-          onSubmitCapture={onclickauction}
         >
           <Form.Item
             name="title"
@@ -100,14 +98,12 @@ const AddAuctionButton = () => {
           <Form.Item
             name="cropImage"
             label="Crop Image"
-            valuePropName="fileList"
-            getValueFromEvent={({ fileList }) => ({ fileList })}
             extra="Upload an image of the crop"
           >
             <Upload
-              beforeUpload={() => false} 
               listType="picture"
-              showUploadList={false}
+              showUploadList={true}
+              beforeUpload={() => false}
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>

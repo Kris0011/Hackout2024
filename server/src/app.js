@@ -4,7 +4,6 @@ import { auth} from 'express-openid-connect';
 import  userRouter  from './Routes/userRouter.js';
 import http from 'http';
 import { Server } from 'socket.io';
-import {isAuthenticated } from './Middleware/IsAuthinticated.js';
 import AuctionRouter from './Routes/AuctionRouter.js';
 
 const app = express();
@@ -31,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
 app.use("/", userRouter);
-app.use("/api",isAuthenticated,AuctionRouter);
+app.use("/api",AuctionRouter);
 
 
 const io = new Server(server, {

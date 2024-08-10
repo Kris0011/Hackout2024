@@ -15,17 +15,6 @@ const { Title, Text } = Typography;
 
 
 
-// useEffect(()=>{
-//   const user = useSelector((state: any) => state.isAuthenticated.user);
-//   if (!user) {
-//     console.log('User is not logged in');
-//   }
-
-//   axios.get("http://localhost:5000/api/auctions").then((res) => {
-//     console.log(res.data);
-//   });
-
-//   }, []);
 
 function Auction() {
   const [auctions, setAuctions] = useState([]);
@@ -33,6 +22,7 @@ function Auction() {
     useEffect(() => {
       axios.get("http://localhost:3000/api/auctions")
         .then((res) => {
+          console.log("Hii")
           setAuctions(res.data); 
         })
         .catch((err) => {
@@ -45,15 +35,15 @@ function Auction() {
   const socket = useSocket();
   if (!socket) return <Title level={2}>Loading ...</Title>;
 
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Connected to server');
-    });
+  // useEffect(() => {
+  //   socket.on('connect', () => {
+  //     console.log('Connected to server');
+  //   });
 
-    return () => {
-      socket.off('connect');
-    };
-  }, [socket]);
+  //   return () => {
+  //     socket.off('connect');
+  //   };
+  // }, [socket]);
 
   
 

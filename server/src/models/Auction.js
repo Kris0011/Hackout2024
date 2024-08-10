@@ -10,7 +10,7 @@ const AuctionSchema = new Schema({
     type: String,
     required: true,
   },
-  cropImage: {
+  cropimgurl: {
     type: String,
     required: true,
   },
