@@ -14,5 +14,9 @@ app.register_blueprint(fertilizer , url_prefix='/fertilizer')
 
 app.register_blueprint(nasa_firms , url_prefix='/nasa_firms')
 
+@app.route('/') 
+def home():
+    return 'Hello!'
+
 if __name__ == '__main__':
     app.run(debug=True)

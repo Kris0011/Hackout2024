@@ -1,195 +1,83 @@
-import React, { useState } from "react";
-import { Button, Grid, Menu, Dropdown, theme } from "antd";
-import { MenuOutlined, UserOutlined } from "@ant-design/icons";
-import Logo from "../assets/LOGO.png";
-import { useNavigate } from "react-router-dom"; 
-import { useDispatch, useSelector } from "react-redux";
-import DropDown from "./Auth/DropDown";
-
-const { useToken } = theme;
-const { useBreakpoint } = Grid;
-
-
-
-
-
-
-
-
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { useDispatch, useSelector } from 'react-redux';
+import Logo from '../assets/LOGO.png';
+import DropDown from './Auth/DropDown';
+import { Menu, Button, Dropdown } from 'antd';
 
 function Navbar() {
-  const { token } = useToken();
-  const screens = useBreakpoint();
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState('home');
   const navigate = useNavigate(); 
+  const { user } = useSelector((state: any) => state.user);
+  const dispatch = useDispatch(); 
 
-  const { user }  = useSelector((state: any) => state.user);
-
-  const dispatch = useDispatch();
-
-  console.log(user);
-
-
-
-
- 
-
-  const menuItems = [
-    {
-      label: "Home",
-      key: "home",
-    },
-    {
-      label: "Dashboard",
-      key: "dashboard",
-    },
-    {
-      label: "Detection",
-      key: "SubMenu",
-      children: [
-        {
-          label: "Crop detection",
-          key: "cropDetection",
-        },
-        {
-          label: "Plant disease detection",
-          key: "plantDiseaseDetection",
-        },
-      ],
-    },
-    {
-      label: "Auction",
-      key: "auction",
-    },
+  const advancedToolsItems = [
+    { label: 'Fire Predictor', key: 'tool1', route: '/detection/plant-disease' },
+    { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
+    { label: 'Plant Disease Predictor', key: 'tool3', route: '/detection/plant-disease' },
   ];
 
-  const profileMenuItems = [
-    {
-      label: "Logout",
-      key: "logout",
-    },
-    {
-      label: "Login with other email",
-      key: "loginWithOtherEmail",
-    },
+  const items = [
+    { label: 'Home', key: 'home', route: '/' },
+    { label: 'Dashboard', key: 'dashboard', route: '/dashboard' },
+    { label: 'Auction', key: 'auction', route: '/auction' },
   ];
 
-  const onClick = (e: any) => {
-    console.log("click ", e);
-    setCurrent(e.key);
-
-    switch (e.key) {
-      case "home":
-        navigate("/");
-        break;
-      case "dashboard":
-        navigate("/dashboard");
-        break;
-      case "cropDetection":
-        navigate("/detection/crop");
-        break;
-      case "plantDiseaseDetection":
-        navigate("/detection/plant-disease");
-        break;
-      case "auction":
-        navigate("/auction");
-        break;
-      case "logout":
-        //TODO Handle logout
-        console.log("Logging out");
-        break;
-      case "loginWithOtherEmail":
-        //TODO Add func for login again
-        console.log("Login with other email");
-        break;
-      default:
-        navigate("/");
-    }
+  const handleAdvancedToolsClick = (route: string) => {
+    navigate(route);
   };
 
-  const styles: { [key: string]: React.CSSProperties } = {
-    container: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      margin: "0 auto",
-      maxWidth: token.screenXL,
-      padding: `0 ${token.paddingLG}px`,
-    },
-    header: {
-      backgroundColor: "rgb(200, 200, 200)",
-      borderBottom: `${token.lineWidth}px ${token.lineType} ${token.colorSplit}`,
-      position: "relative",
-    },
-    logo: {
-      display: "flex",
-      alignItems: "center",
-      height: token.sizeLG,
-    },
-    logoImg: {
-      height: "40px",
-      marginRight: "10px",
-    },
-    logoText: {
-      fontSize: "1.5rem",
-      color: token.colorTextBase,
-      fontWeight: "bold",
-    },
-    menu: {
-      flex: 1,
-      margin: "0 20px",
-      lineHeight: screens.sm ? "4rem" : "3.5rem",
-      backgroundColor: "rgb(200, 200, 200)",
-
-    },
-    menuContainer: {
-      display: "flex",
-      alignItems: "center",
-      gap: token.size,
-    },
-    buttonGroup: {
-      display: "flex",
-      alignItems: "center",
-      gap: "10px",
-    },
-  
+  const handleClick = (key: string, route: string) => {
+    setCurrent(key);
+    navigate(route);
   };
+
+  const advancedToolsMenu = (
+    <Menu>
+      {advancedToolsItems.map(item => (
+        <Menu.Item key={item.key} onClick={() => handleAdvancedToolsClick(item.route)}>
+          {item.label}
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
 
   return (
-    <nav style={styles.header} >
-      <div style={styles.container}>
-        <div style={styles.logo}>
-          <img src={Logo} alt="Logo" style={styles.logoImg} />
-          <h1 style={styles.logoText}>DevBlogs</h1>
+    <nav className="bg-[#16302B] border-b border-gray-700">
+      <div className="container mx-auto flex items-center justify-between p-4">
+        <div className="flex items-center">
+          <img src={Logo} alt="Logo" className="h-10 mr-3" />
+          <h1 className="text-white text-2xl font-bold">DevBlogs</h1>
         </div>
-        <Menu
-          style={styles.menu}
-          mode="horizontal"
-          items={menuItems}
-          onClick={onClick}
-          selectedKeys={[current]}
-          overflowedIndicator={<Button type="text" icon={<MenuOutlined />} />}
-        />
-        <div style={styles.buttonGroup}>
-         
-         {
-            user &&  
-            <div>
-                <DropDown />
-                <a href="http://localhost:3000/logout"><Button type="dashed">Logout</Button></a>
-
-            </div>
-            
-           
-         }
-         {
-            !user && 
-            <a href="http://localhost:3000/login"><Button type="primary">Login</Button></a>
-         }
-  
-          
+        <ul className="flex space-x-4 text-white">
+          {items.map((item) => (
+            <li
+              key={item.key}
+              className={`cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300 ${
+                current === item.key ? 'bg-gray-600' : 'hover:bg-gray-700'
+              }`}
+              onClick={() => handleClick(item.key, item.route)}
+            >
+              {item.label}
+            </li>
+          ))}
+        </ul>
+        <div className='flex flex-row space-x-3'>
+          <Dropdown overlay={advancedToolsMenu}>
+            <Button>
+              Advanced Tools
+            </Button>
+          </Dropdown>
+        <div>
+          {user ? (
+            <DropDown />
+          ) : (
+            <a href="http://localhost:3000/login">
+              <Button type="primary">Login</Button>
+            </a>
+          )}
         </div>
+          </div>
       </div>
     </nav>
   );

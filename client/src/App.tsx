@@ -9,10 +9,25 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import i18 from "i18next";
+
+interface Description {
+  line1: string;
+  line2: string;
+}
+
+import Footer from "./components/Footersection";
 
 export default function App() {
 
   const dispatch = useDispatch();
+  // const { t } : any = useTranslation();
+  // const { line1 , line2 }  = t("description", { channel: "RoadsideCoder" });
+
+  // console.log(line1);
+  // console.log(line2);
+  
+
   const findUser = async () => {
     try {
       const res = await axios.get("http://localhost:3000/getuser" , { withCredentials: true });
@@ -47,15 +62,17 @@ export default function App() {
       <Router>
         <Toaster />
         <Navbar />
+        {/* <LanguageSelector /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/detection/crop" element={<CropDetection />} />
           <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
           <Route path="/auction" element={<Auction />} />
-
         </Routes>
+        <Footer />
       </Router>
+
     </div>
   );
 }

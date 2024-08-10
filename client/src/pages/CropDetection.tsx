@@ -30,8 +30,7 @@ function CropDetection() {
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          style={{ backgroundColor: '#ffffff', padding: '20px' }} // Ensure form background color contrasts with card
-        >
+          style={{ backgroundColor: '', padding: '20px' }} >
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
