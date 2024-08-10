@@ -82,7 +82,7 @@ function Navbar() {
   );
 
   return (
-    <nav className="bg-[#16302B] border-b border-gray-700">
+    <nav className="bg-[#16302B] border-b border-gray-700 z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center">
           <img src={Logo} alt="Logo" className="h-10 mr-3" />
@@ -118,7 +118,7 @@ function Navbar() {
               <DropDown />
             ) : (
               <a href="http://localhost:3000/login">
-                <Button type="primary">Login</Button>
+                <Button type="primary" size='large'>Login</Button>
               </a>
             )}
           </div>

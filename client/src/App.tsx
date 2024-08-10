@@ -19,6 +19,7 @@ interface Description {
 
 import Footer from "./components/Footersection";
 import AuctionRoom from "./pages/AuctionRoom";
+import ExampleDoc from "./components/docs/ExampleDoc";
 
 export default function App() {
 
@@ -67,6 +68,13 @@ export default function App() {
           <Route path="/market/:id" element={<AuctionRoom />} />
           {/* <Route path="/auction" element={<Auction />} /> */}
           <Route path="/fire-predictor" element={<FireDetection />} />
+
+
+        <Route path="/docs/introduction" element={<ExampleDoc />} />
+            <Route path="/docs/getting-started" element={<ExampleDoc />} />
+            <Route path="/docs/components" element={<ExampleDoc />} />
+
+
         </Routes>
         <Footer />
       </Router>

@@ -92,6 +92,7 @@ export default function AuctionRoom(props: any) {
       <div
         title="Auction Room"
         className="flex flex-col justify-center items-center my-10"
+        
       >
         <Card>
           <img
