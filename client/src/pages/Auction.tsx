@@ -22,7 +22,11 @@ interface Auction {
   startDate: string;
   endDate: string;
   status: string;
-  seller: string;
+  seller: Object;
+}
+
+interface AuctionResponse {
+  auctions: Auction[];
 }
 
 function Auction() {
@@ -34,13 +38,9 @@ function Auction() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-
   const fetchAuctions = async () => {
     try {
-      const res = await axios.get<Auction[]>(
-        "http://localhost:3000/api/auctions"
-      );
+      const res = await axios.get("http://localhost:3000/api/auctions");
       setAuctions(res.data.auctions);
       console.log("Auctions fetched successfully:", res.data.auctions);
     } catch (error) {
@@ -57,15 +57,12 @@ function Auction() {
       console.log("Joining Auction Room");
       socket.emit("join-room", {
         auctionId: data._id,
-        user: user.user,
+        user: user?.user,
       });
       navigate(`/market/${data._id}`);
-      
-
     } catch (err) {
       console.error(err);
     }
-
   };
 
   useEffect(() => {
@@ -91,11 +88,7 @@ function Auction() {
     : [];
 
   return (
-    <div className="relative p-6 bg-gray-100"
-    
-    
-    >
-      
+    <div className="relative p-6 bg-gray-100">
       <div className="text-center mb-8">
         <Title level={1} className="text-4xl font-bold text-gray-900">
           Live Marketplace
@@ -105,114 +98,148 @@ function Auction() {
         <AddAuctionButton />
       </div>
 
-     { activeAuctions.length &&  <div className="max-w-6xl mx-auto">
-        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-          Active Auctions
-        </Title>
-        <Row gutter={16}>
-          {activeAuctions.map((auction: any, index: any) => (
-            <Col span={8} key={index}>
-              <Card
-                hoverable
-                cover={
-                  <img
-                    alt="crop"
-                    src={auction.cropImage}
-                    className="w-full h-48 object-cover"
+      {activeAuctions.length && (
+        <div className="max-w-6xl mx-auto">
+          <Title
+            level={2}
+            className="text-2xl font-semibold text-gray-800 mb-4 text-center"
+          >
+            Active Auctions
+          </Title>
+          <Row gutter={16}>
+            {activeAuctions.map((auction: any, index: any) => (
+              <Col span={8} key={index}>
+                <Card
+                  hoverable
+                  cover={
+                    <img
+                      alt="crop"
+                      src={auction.cropImage}
+                      className="w-full h-48 object-cover"
+                    />
+                  }
+                  className="shadow-lg my-4"
+                  onClick={() => {
+                    getAuctionRoom(auction);
+                  }}
+                >
+                  <Card.Meta
+                    title={
+                      <Text strong className="text-lg">
+                        {auction.title}
+                      </Text>
+                    }
+                    description={
+                      <Text className="text-gray-600">
+                        {auction.description}
+                      </Text>
+                    }
                   />
-                }
-                className="shadow-lg my-4"
-                onClick={() => {
-                  getAuctionRoom(auction);
-                }}
-              >
-                <Card.Meta
-                  title={
-                    <Text strong className="text-lg">
-                      {auction.title}
+                  <div className="mt-4 text-gray-700">
+                    <Text strong>Starting Price:</Text>{" "}
+                    <Text>{auction.startingPrice}</Text>
+                    <br />
+                    <Text strong>Current Price:</Text>{" "}
+                    <Text>{auction.currentPrice}</Text>
+                    <br />
+                    <Text strong>Seller Details:</Text>{" "}
+                    <Text>{auction.seller.name}</Text>
+                    <br />
+                    <div className="flex space-x-2 items-center mt-2 ">
+                    <img
+                        src={auction.seller.ImageUrl}
+                        alt=""
+                        className="w-10 rounded-full "
+                      />
+                      <Text>{auction.seller.email}</Text>
+                     
+                    </div>
+                    <br />
+                    <br />
+                    <Text strong>Start Date:</Text>{" "}
+                    <Text>
+                      {new Date(auction.startDate).toLocaleDateString()}
                     </Text>
-                  }
-                  description={
-                    <Text className="text-gray-600">{auction.description}</Text>
-                  }
-                />
-                <div className="mt-4 text-gray-700">
-                  <Text strong>Starting Price:</Text>{" "}
-                  <Text>${auction.startingPrice}</Text>
-                  <br />
-                  <Text strong>Current Price:</Text>{" "}
-                  <Text>${auction.currentPrice}</Text>
-                  <br />
-                  <Text strong>Start Date:</Text>{" "}
-                  <Text>
-                    {new Date(auction.startDate).toLocaleDateString()}
-                  </Text>
-                  <br />
-                  <Text strong>End Date:</Text>{" "}
-                  <Text>{new Date(auction.endDate).toLocaleDateString()}</Text>
-                  <br />
-                  {/* <Text strong>Status:</Text> <Text>{auction.status}</Text> */}
-                </div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </div> }
+                    <br />
+                    <Text strong>End Date:</Text>{" "}
+                    <Text>
+                      {new Date(auction.endDate).toLocaleDateString()}
+                    </Text>
+                    <br />
+                    {/* <Text strong>Status:</Text> <Text>{auction.status}</Text> */}
+                  </div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
 
-     { inactiveAuctions.length && <div className="max-w-6xl mx-auto">
-        <Title level={2} className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-          Inactive Auctions
-        </Title>
-        <Row gutter={16}>
-          {inactiveAuctions.map((auction: any, index: any) => (
-            <Col span={8} key={index}>
-              <Card
-                hoverable
-                cover={
-                  <img
-                    alt="crop"
-                    src={auction.cropImage}
-                    className="w-full h-48 object-cover"
+      {inactiveAuctions.length && (
+        <div className="max-w-6xl mx-auto">
+          <Title
+            level={2}
+            className="text-2xl font-semibold text-gray-800 mb-4 text-center"
+          >
+            Inactive Auctions
+          </Title>
+          <Row gutter={16}>
+            {inactiveAuctions.map((auction: any, index: any) => (
+              <Col span={8} key={index}>
+                <Card
+                  hoverable
+                  cover={
+                    <img
+                      alt="crop"
+                      src={auction.cropImage}
+                      className="w-full h-48 object-cover"
+                    />
+                  }
+                  className="shadow-lg"
+                >
+                  <Card.Meta
+                    title={
+                      <Text strong className="text-lg">
+                        {auction.title}
+                      </Text>
+                    }
+                    description={
+                      <Text className="text-gray-600">
+                        {auction.description}
+                      </Text>
+                    }
                   />
-                }
-                className="shadow-lg"
-              >
-                <Card.Meta
-                  title={
-                    <Text strong className="text-lg">
-                      {auction.title}
+                  <div className="mt-4 text-gray-700">
+                    <Text strong>Starting Price:</Text>{" "}
+                    <Text>${auction.startingPrice}</Text>
+                    <br />
+                    <Text strong>Current Price:</Text>{" "}
+                    <Text>${auction.currentPrice}</Text>
+                    <br />
+                    <Text strong>Start Date:</Text>{" "}
+                    <Text>
+                      {new Date(auction.startDate).toLocaleDateString()}
                     </Text>
-                  }
-                  description={
-                    <Text className="text-gray-600">{auction.description}</Text>
-                  }
-                />
-                <div className="mt-4 text-gray-700">
-                  <Text strong>Starting Price:</Text>{" "}
-                  <Text>${auction.startingPrice}</Text>
-                  <br />
-                  <Text strong>Current Price:</Text>{" "}
-                  <Text>${auction.currentPrice}</Text>
-                  <br />
-                  <Text strong>Start Date:</Text>{" "}
-                  <Text>
-                    {new Date(auction.startDate).toLocaleDateString()}
-                  </Text>
-                  <br />
-                  <Text strong>End Date:</Text>{" "}
-                  <Text>{new Date(auction.endDate).toLocaleDateString()}</Text>
-                  <br />
-                  {/* <Text strong>Status:</Text> <Text>{auction.status}</Text> */}
-                </div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </div>
-      }
+                    <br />
+                    <Text strong>End Date:</Text>{" "}
+                    <Text>
+                      {new Date(auction.endDate).toLocaleDateString()}
+                    </Text>
+                    <br />
+                    {/* <Text strong>Status:</Text> <Text>{auction.status}</Text> */}
+                  </div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto ">
-        <Title level={2} className="text-2xl font-semibold text-gray-800 my-10 text-center">
+        <Title
+          level={2}
+          className="text-2xl font-semibold text-gray-800 my-10 text-center"
+        >
           Completed Auctions
         </Title>
         <Row gutter={16}>
