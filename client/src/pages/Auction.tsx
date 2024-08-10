@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AddAuctionButton from '../components/AddAuctionButton'; 
 import { useSocket } from '../context/SocketContext'
 import { Card, Col, Row, Typography } from 'antd';
-import { useSelector } from 'react-redux';
 
 import Orange from "../assets/oranges.jpg";
 import Apple from "../assets/Apple.jpg";
@@ -13,72 +12,25 @@ import axios from "axios";
 
 const { Title, Text } = Typography;
 
-const dummyAuctions = [
-  {
-    title: 'Farm Fresh Apples',
-    description: 'Fresh and juicy apples straight from the farm.',
-    cropImage: Orange,
-    startingPrice: 50,
-    currentPrice: 75,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 24*60*60*1000), 
-    status: 'active',
-  },
-  {
-    title: 'Organic Tomatoes',
-    description: 'Ripe and organic tomatoes for your kitchen.',
-    cropImage: Tomato,
-    startingPrice: 30,
-    currentPrice: 45,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 2*24*60*60*1000),
-    status: 'inactive',
-  },
-  {
-    title: 'Exotic Bananas',
-    description: 'Sweet and exotic bananas from tropical regions.',
-    cropImage: Banana,
-    startingPrice: 20,
-    currentPrice: 35,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 5*24*60*60*1000), 
-    status: 'completed',
-  },
-  {
-    title: 'Fresh Oranges',
-    description: 'Citrusy and fresh oranges, perfect for juices.',
-    cropImage: Orange,
-    startingPrice: 40,
-    currentPrice: 60,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 3*24*60*60*1000), 
-    status: 'active',
-  },
-  {
-    title: 'Juicy Apples',
-    description: 'Delicious apples ready for your table.',
-    cropImage: Apple,
-    startingPrice: 45,
-    currentPrice: 65,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 4*24*60*60*1000), 
-    status: 'completed',
-  }
-];
 
-useEffect(()=>{
-  const user = useSelector((state: any) => state.isAuthenticated.user);
-  if (!user) {
-    console.log('User is not logged in');
-  }
 
-  axios.get("http://localhost:5000/api/auctions").then((res) => {
-    console.log(res.data);
-  });
 
-  }, []);
 
 function Auction() {
+  const [auctions, setAuctions] = useState([]);
+  const loadofauctions = ()=>{
+    useEffect(() => {
+      axios.get("http://localhost:3000/api/auctions")
+        .then((res) => {
+          setAuctions(res.data); 
+        })
+        .catch((err) => {
+          console.error("Failed to fetch auctions:", err);
+        });
+    }, []);
+  }
+
+  loadofauctions();
   const socket = useSocket();
   if (!socket) return <Title level={2}>Loading ...</Title>;
 
@@ -93,7 +45,9 @@ function Auction() {
   }, [socket]);
 
   
-  // Filter auctions based on their status
+
+
+  
   const activeAuctions = dummyAuctions.filter(auction => auction.status === 'active');
   const inactiveAuctions = dummyAuctions.filter(auction => auction.status === 'inactive');
   const completedAuctions = dummyAuctions.filter(auction => auction.status === 'completed');
@@ -173,3 +127,56 @@ function Auction() {
 }
 
 export default Auction;
+
+const dummyAuctions = [
+  {
+    title: 'Farm Fresh Apples',
+    description: 'Fresh and juicy apples straight from the farm.',
+    cropImage: Orange,
+    startingPrice: 50,
+    currentPrice: 75,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 24*60*60*1000), 
+    status: 'active',
+  },
+  {
+    title: 'Organic Tomatoes',
+    description: 'Ripe and organic tomatoes for your kitchen.',
+    cropImage: Tomato,
+    startingPrice: 30,
+    currentPrice: 45,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 2*24*60*60*1000),
+    status: 'inactive',
+  },
+  {
+    title: 'Exotic Bananas',
+    description: 'Sweet and exotic bananas from tropical regions.',
+    cropImage: Banana,
+    startingPrice: 20,
+    currentPrice: 35,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 5*24*60*60*1000), 
+    status: 'completed',
+  },
+  {
+    title: 'Fresh Oranges',
+    description: 'Citrusy and fresh oranges, perfect for juices.',
+    cropImage: Orange,
+    startingPrice: 40,
+    currentPrice: 60,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 3*24*60*60*1000), 
+    status: 'active',
+  },
+  {
+    title: 'Juicy Apples',
+    description: 'Delicious apples ready for your table.',
+    cropImage: Apple,
+    startingPrice: 45,
+    currentPrice: 65,
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 4*24*60*60*1000), 
+    status: 'completed',
+  }
+];
