@@ -85,10 +85,10 @@ function Auction() {
   const socket = useSocket();
   if (!socket) return <Title level={2}>Loading ...</Title>;
 
-  // useEffect(() => {
-  //   socket.on('connect', () => {
-  //     console.log('Connected to server');
-  //   });
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
 
     return () => {
       socket.off('connect');
@@ -196,55 +196,3 @@ function Auction() {
 
 export default Auction;
 
-const dummyAuctions = [
-  {
-    title: 'Farm Fresh Apples',
-    description: 'Fresh and juicy apples straight from the farm.',
-    cropImage: Orange,
-    startingPrice: 50,
-    currentPrice: 75,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 24*60*60*1000), 
-    status: 'active',
-  },
-  {
-    title: 'Organic Tomatoes',
-    description: 'Ripe and organic tomatoes for your kitchen.',
-    cropImage: Tomato,
-    startingPrice: 30,
-    currentPrice: 45,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 2*24*60*60*1000),
-    status: 'inactive',
-  },
-  {
-    title: 'Exotic Bananas',
-    description: 'Sweet and exotic bananas from tropical regions.',
-    cropImage: Banana,
-    startingPrice: 20,
-    currentPrice: 35,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 5*24*60*60*1000), 
-    status: 'completed',
-  },
-  {
-    title: 'Fresh Oranges',
-    description: 'Citrusy and fresh oranges, perfect for juices.',
-    cropImage: Orange,
-    startingPrice: 40,
-    currentPrice: 60,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 3*24*60*60*1000), 
-    status: 'active',
-  },
-  {
-    title: 'Juicy Apples',
-    description: 'Delicious apples ready for your table.',
-    cropImage: Apple,
-    startingPrice: 45,
-    currentPrice: 65,
-    startDate: new Date(),
-    endDate: new Date(Date.now() + 4*24*60*60*1000), 
-    status: 'completed',
-  }
-];
