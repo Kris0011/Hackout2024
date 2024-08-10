@@ -13,7 +13,6 @@ const UserSchema = new Schema({
   },
   ImageUrl: {
     type: String,
-    unique: true,
   },
   auctions: [
     {

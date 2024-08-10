@@ -15,7 +15,7 @@ const config = {
   secret: process.env.SECRET,
   baseURL: 'http://localhost:3000',
   clientID: process.env.CLIENTID,
-  issuerBaseURL: process.env.ISUSERBASEURL
+  issuerBaseURL: process.env.ISUSERBASEURL,  
 };
 
 

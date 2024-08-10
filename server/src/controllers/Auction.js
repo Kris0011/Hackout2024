@@ -1,12 +1,14 @@
 const Auction = require("../models/Auction");
 const User = require("../models/User");
 const Bid = require("../models/Bid");
+const { finduserbyemail } = require("./user");
 
 exports.createAuction = async (req, res) => {
   try {
     const { title, description, cropImage, startingPrice, startDate, endDate } =
       req.body;
-    const seller = req.user.id;
+    const seller = finduserbyemail(req.user_email);
+
 
     const auction = new Auction({
       title,
