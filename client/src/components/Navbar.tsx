@@ -12,7 +12,7 @@ function Navbar() {
   const dispatch = useDispatch(); 
 
   const advancedToolsItems = [
-    { label: 'Fire Predictor', key: 'tool1', route: '/detection/plant-disease' },
+    { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
     { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
     { label: 'Plant Disease Predictor', key: 'tool3', route: '/detection/plant-disease' },
   ];
@@ -24,6 +24,7 @@ function Navbar() {
   ];
 
   const handleAdvancedToolsClick = (route: string) => {
+    setCurrent('tool');
     navigate(route);
   };
 
