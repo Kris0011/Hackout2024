@@ -19,7 +19,6 @@ function Navbar() {
   const advancedToolsItems = [
     { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
     { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
-    { label: 'Plant Disease Predictor', key: 'tool3', route: '/detection/plant-disease' },
   ];
 
   const items = [
