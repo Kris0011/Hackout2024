@@ -25,4 +25,10 @@ Explore how cutting-edge machine learning and data-driven solutions are transfor
 - **Real-Time Updates**: Stay informed on auction status and bid changes in real-time.
 
 ![Websit photos](./asset/Home_page.png)
+![image](./asset/active_fire.png)
+![image](./asset/flizer.png)
+![image](./asset/marketplace.png)
+
+
+
 
