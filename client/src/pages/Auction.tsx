@@ -22,9 +22,6 @@ interface Auction {
   seller: Object;
 }
 
-interface AuctionResponse {
-  auctions: Auction[];
-}
 
 function Auction() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
