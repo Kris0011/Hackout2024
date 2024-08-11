@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Typography } from 'antd';
 import Sidebar from '../components/docs/Sidebar/Sidebar';
-import Bayes from "../assets/Bayes.jpeg";
 import API from "../assets/API_working.jpeg";
 import { useTranslation } from 'react-i18next';
 
@@ -78,22 +77,23 @@ const DashBoard: React.FC = () => {
       case 'doc3':
         return (
           <div>
-            <Title level={2} className="text-2xl">Technical Stack (Part 2) & API Integration</Title>
-            <h2 id="socket-io" className="text-xl">2. WebSockets (Socket.io) for Auctions</h2>
-            <p><strong>Purpose:</strong> To provide real-time communication for auction bidding, ensuring that all participants receive instant updates.</p>
-            <p><strong>How It Works:</strong> Socket.io establishes a WebSocket connection between the client and server. The server emits updates on bid changes, which are immediately received and displayed by all connected clients, facilitating a live bidding experience.</p>
-            <p><strong>Example Usage:</strong> During an auction, bids are placed and updated in real-time. Socket.io ensures that all participants see the current highest bid and remaining auction time without needing to refresh their browsers.</p>
-            <h2 id="nasa-firms" className="text-xl">3. NASA FIRMS API Integration</h2>
-            <p><strong>Purpose:</strong> To retrieve data on fire activity and risk levels based on user-provided geographic locations.</p>
-            <p><strong>How It Works:</strong> The frontend sends location data to the backend, which then queries the NASA FIRMS API. The backend processes the API response and determines the fire risk, sending relevant alerts to the user.</p>
-            <img src={API} alt="api working" />
-            <p><strong>Example Usage:</strong> A farmer enters their location, and the system checks for recent fire activity in that area. If there is an active fire or high risk, the system alerts the farmer with necessary precautions.</p>
+            <Title level={2} className="text-2xl">{t("Technical Stack (Part 2)")} & {t("API Integration")}</Title>
+            <h2 id="socket-io" className="text-xl">{t("WebSockets (Socket.io) for Auctions")}</h2>
+            <p><strong>{t("Purpose")}:</strong> {t("To provide real-time communication for auction bidding, ensuring that all participants receive instant updates.")}</p>
+            <p><strong>{t("How It Works")}:</strong> {t("Socket.io establishes a WebSocket connection between the client and server. The server emits updates on bid changes, which are immediately received and displayed by all connected clients, facilitating a live bidding experience.")}</p>
+            <p><strong>{t("Example Usage")}:</strong> {t("During an auction, bids are placed and updated in real-time. Socket.io ensures that all participants see the current highest bid and remaining auction time without needing to refresh their browsers.")}</p>
+            <h2 id="nasa-firms" className="text-xl">{t("NASA FIRMS API Integration")}</h2>
+            <p><strong>{t("Purpose")}:</strong> {t("To retrieve data on fire activity and risk levels based on user-provided geographic locations.")}</p>
+            <p><strong>{t("How It Works")}:</strong> {t("The frontend sends location data to the backend, which then queries the NASA FIRMS API. The backend processes the API response and determines the fire risk, sending relevant alerts to the user.")}</p>
+            <img src={API} alt={t("API working")} />
+            <p><strong>{t("Example Usage")}:</strong> {t("A farmer enters their location, and the system checks for recent fire activity in that area. If there is an active fire or high risk, the system alerts the farmer with necessary precautions.")}</p>
 
-            <h2 id="future-enhancements" className="text-xl">4. Future Enhancements</h2>
-            <p><strong>4.1 Enhanced Data Analytics:</strong> Plans to integrate more advanced data analytics tools to provide deeper insights into user behavior and system performance.</p>
-            <p><strong>4.2 Improved Machine Learning Models:</strong> Exploring the use of more sophisticated machine learning models to enhance the accuracy of fertilizer predictions and other recommendations.</p>
-            <p><strong>4.3 Expanded API Integrations:</strong> Looking to integrate additional third-party APIs for more comprehensive data coverage and feature expansion.</p>
-            <p><strong>4.4 User Feedback Integration:</strong> Incorporating user feedback mechanisms to continuously improve the system based on real-world usage and requirements.</p>
+            <h2 id="future-enhancements" className="text-xl">{t("Future Enhancements")}</h2>
+            <p><strong>{t("4.1 Enhanced Data Analytics")}:</strong> {t("Plans to integrate more advanced data analytics tools to provide deeper insights into user behavior and system performance.")}</p>
+            <p><strong>{t("4.2 Improved Machine Learning Models")}:</strong> {t("Exploring the use of more sophisticated machine learning models to enhance the accuracy of fertilizer predictions and other recommendations.")}</p>
+            <p><strong>{t("4.3 Expanded API Integrations")}:</strong> {t("Looking to integrate additional third-party APIs for more comprehensive data coverage and feature expansion.")}</p>
+            <p><strong>{t("4.4 User Feedback Integration")}:</strong> {t("Incorporating user feedback mechanisms to continuously improve the system based on real-world usage and requirements.")}</p>
+
           </div>
         );
       default:
