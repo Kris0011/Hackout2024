@@ -1,0 +1,10 @@
+
+@font-face {
+    font-family: 'secondary';
+    src: url("/public/fonts/Quicksand-Medium.ttf") format('truetype');
+  }
+
+
+  * {
+    font-family: 'primary', 'poppins' important! ;
+  }

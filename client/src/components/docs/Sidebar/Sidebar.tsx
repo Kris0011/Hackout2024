@@ -16,6 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ menuItems, onMenuItemClick }) => {
         defaultSelectedKeys={[menuItems[0].key]}
         style={{ height: '100%', borderRight: 0 }}
         onClick={(e) => onMenuItemClick(e.key)}
+        className='pt-10'
       >
         {menuItems.map((item) => (
           <Menu.Item key={item.key}>{item.label}</Menu.Item>

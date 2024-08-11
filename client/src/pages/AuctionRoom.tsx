@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as io from "socket.io-client";
 import MyTimer from "../components/MyTimer";
-import { use } from "i18next";
+
 
 export default function AuctionRoom(props: any) {
   const { id } = useParams();
@@ -20,7 +20,7 @@ export default function AuctionRoom(props: any) {
 
   const socket = io.connect("http://localhost:3000");
 
-  const [seller, setSeller] = useState<Object>();
+
 
   const dispatch = useDispatch();
 

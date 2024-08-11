@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation, NavLink } from 'react-router-dom'; 
-import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate , NavLink } from 'react-router-dom'; 
+import { useSelector } from 'react-redux';
 import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
 import DropDown from './Auth/DropDown';
@@ -10,11 +10,11 @@ import { DownOutlined } from '@ant-design/icons';
 function Navbar() {
   const [language, setLanguage] = useState('English');
   const navigate = useNavigate(); 
-  const location = useLocation();
-  const { user } = useSelector((state: any) => state.user);
-  const { lang } = useSelector((state: any) => state.user);
 
-  const dispatch = useDispatch(); 
+  const { user } = useSelector((state: any) => state.user);
+
+
+
 
   const advancedToolsItems = [
     { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
@@ -24,7 +24,7 @@ function Navbar() {
 
   const items = [
     { label: 'Home', key: 'home', route: '/' },
-    { label: 'Dashboard', key: 'dashboard', route: '/dashboard' },
+    { label: 'Docs', key: 'docs', route: '/docs' },
     { label: 'Market', key: 'market', route: '/market' },
   ];
 

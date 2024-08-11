@@ -6,20 +6,17 @@ import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PlantDiseaseDetction from "./pages/PlantDiseaseDetction";
 import Auction from "./pages/Auction";
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import i18 from "i18next";
 
-interface Description {
-  line1: string;
-  line2: string;
-}
+
+
 
 import Footer from "./components/Footersection";
 import AuctionRoom from "./pages/AuctionRoom";
-import ExampleDoc from "./components/docs/ExampleDoc";
+
 
 export default function App() {
 
@@ -55,13 +52,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col font-primary">
       <Router>
         <Toaster />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/docs" element={<DashBoard />} />
           <Route path="/detection/crop" element={<CropDetection />} />
           <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
           <Route path="/market" element={<Auction />} />
@@ -69,10 +66,6 @@ export default function App() {
           {/* <Route path="/auction" element={<Auction />} /> */}
           <Route path="/fire-predictor" element={<FireDetection />} />
 
-
-        <Route path="/docs/introduction" element={<ExampleDoc />} />
-            <Route path="/docs/getting-started" element={<ExampleDoc />} />
-            <Route path="/docs/components" element={<ExampleDoc />} />
 
 
         </Routes>
