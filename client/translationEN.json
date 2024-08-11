@@ -2,6 +2,19 @@
     "Use Cases": "Use Cases",
     "1. Fire Detection": "1. Fire Detection",
     "Actor": "Actor",
+    "Auctions":"Auctions",
+    "Integration":"Integration",
+    "Future Enhancements":"Future Enhancements",
+    "4.1 Enhanced Data Analytics:":"4.1 Enhanced Data Analytics:",
+    "Plans to integrate more advanced data analytics tools to provide deeper insights into user behavior and system performance.":"Plans to integrate more advanced data analytics tools to provide deeper insights into user behavior and system performance.",
+    "4.2 Improved Machine Learning Models: ":"4.2 Improved Machine Learning Models: ",
+    "Exploring the use of more sophisticated machine learning models to enhance the accuracy of fertilizer predictions and other recommendations.":"Exploring the use of more sophisticated machine learning models to enhance the accuracy of fertilizer predictions and other recommendations.",
+    "4.3 Expanded API Integrations:":"4.3 Expanded API Integrations:",
+    "Looking to integrate additional third-party APIs for more comprehensive data coverage and feature expansion.":"Looking to integrate additional third-party APIs for more comprehensive data coverage and feature expansion.",
+    "4.4 User Feedback Integration:":"4.4 User Feedback Integration:",
+    "Incorporating user feedback mechanisms to continuously improve the system based on real-world usage and requirements.":"Incorporating user feedback mechanisms to continuously improve the system based on real-world usage and requirements.",
+    "Part": "Part",
+    "Parts": "Parts",
     "Farmer": "Farmer",
     "Description": "Description",
     "The farmer inputs their geographic location into the system using an interactive map. The system then queries the NASA FIRMS API to retrieve data on recent fire activity and fire risk in the selected area. If the API indicates a high risk of fire, the system sends an alert to the farmer via email or SMS, providing details about the risk level and recommended actions.":"The farmer inputs their geographic location into the system using an interactive map. The system then queries the NASA FIRMS API to retrieve data on recent fire activity and fire risk in the selected area. If the API indicates a high risk of fire, the system sends an alert to the farmer via email or SMS, providing details about the risk level and recommended actions.",
@@ -55,7 +68,7 @@
     "To provide real-time communication for auction bidding, ensuring that all participants receive instant updates.":"To provide real-time communication for auction bidding, ensuring that all participants receive instant updates.",
     "Socket.io establishes a WebSocket connection between the client and server. The server emits updates on bid changes, which are immediately received and displayed by all connected clients, facilitating a live bidding experience.":"Socket.io establishes a WebSocket connection between the client and server. The server emits updates on bid changes, which are immediately received and displayed by all connected clients, facilitating a live bidding experience.",
     "During an auction, bids are placed and updated in real-time. Socket.io ensures that all participants see the current highest bid and remaining auction time without needing to refresh their browsers.":"During an auction, bids are placed and updated in real-time. Socket.io ensures that all participants see the current highest bid and remaining auction time without needing to refresh their browsers."
-    
+
 
 
 }

@@ -28,7 +28,7 @@ const HeroSection = () => {
                 className="text-sm font-semibold leading-6 text-gray-300"
               >
                 Learn more <span aria-hidden="true">→</span>
-                </a>
+              </a>
             </div>
           </div>
         </div>

@@ -9,13 +9,14 @@ import { DownOutlined } from '@ant-design/icons';
 
 function Navbar() {
   const [language, setLanguage] = useState('English');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const { user } = useSelector((state: any) => state.user);
 
   const advancedToolsItems = [
     { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
     { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
+    { label: 'Plant Disease Predictor', key: 'tool3', route: '/detection/plant-disease' },
   ];
 
   const items = [
@@ -70,24 +71,24 @@ function Navbar() {
   );
 
   const handleLogoClick = () => {
-    navigate('/'); // Navigate to the home page
+    navigate('/'); 
   };
 
   return (
-    <nav className="bg-[#16302B] border-b border-gray-700 z-50">
+    <nav className="bg-[#16302B] border-b border-gray-700 z-50 fixed w-full top-0 left-0 right-0">
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
           <img src={Logo} alt="Logo" className="h-10 mr-3" />
-          <h1 className="text-white text-2xl font-bold">AgroZenith</h1>
+          <h1 className="text-white text-2xl font-bold">DevBlogs</h1>
         </div>
-        <ul className="flex space-x-4 text-white">
+        <ul className="flex space-x-6 text-white">
           {items.map((item) => (
             <li key={item.key}>
               <NavLink
                 to={item.route}
                 className={({ isActive }) =>
-                  `cursor-pointer py-2 px-4 rounded-lg transition-colors duration-300 ${
-                    isActive ? 'bg-gray-600' : 'hover:bg-gray-700'
+                  `py-2 px-4 rounded-lg transition-colors duration-300 ${
+                    isActive ? 'bg-indigo-600 text-white' : 'hover:bg-gray-700 text-gray-300'
                   }`
                 }
               >
@@ -96,14 +97,14 @@ function Navbar() {
             </li>
           ))}
         </ul>
-        <div className='flex flex-row space-x-3'>
+        <div className="flex items-center space-x-3">
           <Dropdown overlay={languageMenu}>
-            <Button size="large">
+            <Button size="large" className="bg-gray-800 text-white">
               {language}
             </Button>
           </Dropdown>
           <Dropdown overlay={advancedToolsMenu}>
-            <Button size='large'>
+            <Button size='large' className="bg-gray-800 text-white">
               Advanced Tools
               <DownOutlined />
             </Button>

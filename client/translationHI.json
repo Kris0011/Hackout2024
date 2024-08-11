@@ -1,5 +1,6 @@
 {
   "Use Cases": "उपयोग के मामले",
+  "Integration": "एकीकरण",
   "The farmer inputs their geographic location into the system using an interactive map. The system then queries the NASA FIRMS API to retrieve data on recent fire activity and fire risk in the selected area. If the API indicates a high risk of fire, the system sends an alert to the farmer via email or SMS, providing details about the risk level and recommended actions.":"किसान एक इंटरैक्टिव मानचित्र का उपयोग करके सिस्टम में अपनी भौगोलिक स्थिति दर्ज करता है। सिस्टम तब चयनित क्षेत्र में हाल की अग्नि गतिविधि और अग्नि जोखिम पर डेटा पुनर्प्राप्त करने के लिए NASA FIRMS API से पूछताछ करता है। यदि एपीआई आग के उच्च जोखिम को इंगित करता है, तो सिस्टम किसान को ईमेल या एसएमएस के माध्यम से एक अलर्ट भेजता है, जो जोखिम स्तर और अनुशंसित कार्यों के बारे में विवरण प्रदान करता है।",
   "A farmer in California inputs their farm location into the system. The system detects that there is an active wildfire near their location and immediately alerts them with information on the fire's proximity and suggested safety measures.":"कैलिफ़ोर्निया में एक किसान अपने खेत का स्थान सिस्टम में इनपुट करता है। सिस्टम यह पता लगाता है कि उनके स्थान के पास सक्रिय जंगल की आग है और तुरंत उन्हें आग की निकटता के बारे में जानकारी देकर सचेत करता है और सुरक्षा उपाय सुझाता है।",
   "Farmers can list their agricultural products for auction on the platform. Buyers browse the available listings and place bids on items they wish to purchase. The auction system uses WebSockets to provide real-time updates to all participants, ensuring that bid changes are instantly reflected and that the auction process is smooth and transparent.":"किसान अपने कृषि उत्पादों को नीलामी के लिए मंच पर सूचीबद्ध कर सकते हैं। खरीदार उपलब्ध लिस्टिंग ब्राउज़ करते हैं और उन वस्तुओं पर बोली लगाते हैं जिन्हें वे खरीदना चाहते हैं। नीलामी प्रणाली सभी प्रतिभागियों को वास्तविक समय पर अपडेट प्रदान करने के लिए वेबसॉकेट का उपयोग करती है, यह सुनिश्चित करती है कि बोली परिवर्तन तुरंत प्रतिबिंबित हों और नीलामी प्रक्रिया सुचारू और पारदर्शी हो।",
@@ -19,6 +20,8 @@
   "Description": "विवरण",
   "Example Scenario": "उदाहरण स्थिति",
   "2. Auction": "2. नीलामी",
+  "Auctions":"नीलामी",
+  "Parts":"भाग",
   "Farmers and Buyers": "किसान और खरीदार",
   "3. Fertilizer Prediction": "3. उर्वरक पूर्वानुमान",
   "Technical Stack and Integration": "तकनीकी स्टैक और एकीकरण",
@@ -30,6 +33,7 @@
   "MongoDB": "MongoDB",
   "Socket.io": "Socket.io",
   "Technical Stack":"तकनीकी ढेर",
+  "4.1 Enhanced Data Analytics:": "4.1 उन्नत डेटा विश्लेषण:",
   "1. Technical Stack Overview": "1. तकनीकी स्टैक अवलोकन",
   "2. API Integration Details": "2. API एकीकरण विवरण",
   "2.1 NASA FIRMS API Integration": "2.1 NASA FIRMS API एकीकरण",
@@ -54,5 +58,14 @@
   "A farmer enters their location, and the system checks for recent fire activity in that area. If there is an active fire or high risk, the system alerts the farmer with necessary precautions.": "एक किसान अपना स्थान दर्ज करता है, और सिस्टम उस क्षेत्र में हाल की आग की गतिविधि की जांच करता है। यदि वहाँ एक सक्रिय आग या उच्च जोखिम है, तो सिस्टम किसान को आवश्यक सावधानियों के साथ अलर्ट करता है।",
   "To provide real-time communication for auction bidding, ensuring that all participants receive instant updates.": "नीलामी बिडिंग के लिए रियल-टाइम संचार प्रदान करने के लिए, सुनिश्चित करता है कि सभी प्रतिभागियों को तात्कालिक अपडेट प्राप्त हो।",
   "Socket.io establishes a WebSocket connection between the client and server. The server emits updates on bid changes, which are immediately received and displayed by all connected clients, facilitating a live bidding experience.": "Socket.io क्लाइंट और सर्वर के बीच वेब्सॉकेट कनेक्शन स्थापित करता है। सर्वर बिड परिवर्तन पर अपडेट जारी करता है, जो तुरंत सभी जुड़े क्लाइंट्स द्वारा प्राप्त और दर्शाया जाता है, जिससे एक लाइव बिडिंग अनुभव को सक्षम करता है।",
-  "During an auction, bids are placed and updated in real-time. Socket.io ensures that all participants see the current highest bid and remaining auction time without needing to refresh their browsers.": "नीलामी के दौरान, बिड्स रियल-टाइम में प्लेस और अपडेट किए जाते हैं। Socket.io सुनिश्चित करता है कि सभी प्रतिभागियों को वर्तमान सबसे उच्च बिड और शेष नीलामी समय देखने को मिलता है बिना ब्राउज़र को रिफ्रेश किए।"
+  "During an auction, bids are placed and updated in real-time. Socket.io ensures that all participants see the current highest bid and remaining auction time without needing to refresh their browsers.": "नीलामी के दौरान, बिड्स रियल-टाइम में प्लेस और अपडेट किए जाते हैं। Socket.io सुनिश्चित करता है कि सभी प्रतिभागियों को वर्तमान सबसे उच्च बिड और शेष नीलामी समय देखने को मिलता है बिना ब्राउज़र को रिफ्रेश किए।",
+  "Future Enhancements": "भविष्य के सुधार",
+  
+  "Plans to integrate more advanced data analytics tools to provide deeper insights into user behavior and system performance.": "उपयोगकर्ता के व्यवहार और सिस्टम की कार्यक्षमता के बारे में गहरी जानकारी प्रदान करने के लिए अधिक उन्नत डेटा विश्लेषण उपकरणों को एकीकृत करने की योजना है।",
+  "4.2 Improved Machine Learning Models: ": "4.2 उन्नत मशीन लर्निंग मॉडल:",
+  "Exploring the use of more sophisticated machine learning models to enhance the accuracy of fertilizer predictions and other recommendations.": "खाद की भविष्यवाणियों और अन्य सिफारिशों की सटीकता को बढ़ाने के लिए अधिक परिष्कृत मशीन लर्निंग मॉडल के उपयोग की खोज करना।",
+  "4.3 Expanded API Integrations:": "4.3 विस्तारित API एकीकरण:",
+  "Looking to integrate additional third-party APIs for more comprehensive data coverage and feature expansion.": "अधिक व्यापक डेटा कवरेज और फीचर विस्तार के लिए अतिरिक्त थर्ड-पार्टी APIs को एकीकृत करने की योजना।",
+  "4.4 User Feedback Integration:": "4.4 उपयोगकर्ता फीडबैक एकीकरण:",
+  "Incorporating user feedback mechanisms to continuously improve the system based on real-world usage and requirements.": "वास्तविक-विश्व उपयोग और आवश्यकताओं के आधार पर सिस्टम में निरंतर सुधार के लिए उपयोगकर्ता फीडबैक तंत्र को शामिल करना।"
 }
