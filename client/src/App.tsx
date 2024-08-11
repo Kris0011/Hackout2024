@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import CropDetection from "./pages/CropDetection";
-import FireDetection from "./pages/FireDetection";  
+import FireDetection from "./pages/FireDetection";
 import DashBoard from "./pages/DashBoard";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -11,33 +11,26 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import i18 from "i18next";
-
-interface Description {
-  line1: string;
-  line2: string;
-}
-
 import Footer from "./components/Footersection";
 import AuctionRoom from "./pages/AuctionRoom";
 import ExampleDoc from "./components/docs/ExampleDoc";
 
 export default function App() {
-
   const dispatch = useDispatch();
-  
+
   const findUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/getuser" , { withCredentials: true });
+      const res = await axios.get("http://localhost:3000/getuser", { withCredentials: true });
 
       console.log(res.data);
 
-      if(!res.data.loggedIn){
+      if (!res.data.loggedIn) {
         console.log("No user found");
         dispatch({
           type: "CLEAR_USER",
         });
         return;
-      }    
+      }
 
       dispatch({
         type: "SET_USER",
@@ -52,33 +45,29 @@ export default function App() {
 
   useEffect(() => {
     findUser();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Router>
         <Toaster />
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/detection/crop" element={<CropDetection />} />
-          <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
-          <Route path="/market" element={<Auction />} />
-          <Route path="/market/:id" element={<AuctionRoom />} />
-          {/* <Route path="/auction" element={<Auction />} /> */}
-          <Route path="/fire-predictor" element={<FireDetection />} />
-
-
-        <Route path="/docs/introduction" element={<ExampleDoc />} />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/docs" element={<DashBoard />} />
+            <Route path="/detection/crop" element={<CropDetection />} />
+            <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
+            <Route path="/market" element={<Auction />} />
+            <Route path="/market/:id" element={<AuctionRoom />} />
+            <Route path="/fire-predictor" element={<FireDetection />} />
+            <Route path="/docs/introduction" element={<ExampleDoc />} />
             <Route path="/docs/getting-started" element={<ExampleDoc />} />
             <Route path="/docs/components" element={<ExampleDoc />} />
-
-
-        </Routes>
+          </Routes>
+        </main>
         <Footer />
       </Router>
-
     </div>
   );
 }
