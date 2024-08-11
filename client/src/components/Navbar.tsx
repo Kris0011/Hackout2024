@@ -19,7 +19,6 @@ function Navbar() {
   const advancedToolsItems = [
     { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
     { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
-    { label: 'Plant Disease Predictor', key: 'tool3', route: '/detection/plant-disease' },
   ];
 
   const items = [
@@ -78,7 +77,7 @@ function Navbar() {
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center">
           <img src={Logo} alt="Logo" className="h-10 mr-3" />
-          <h1 className="text-white text-2xl font-bold">DevBlogs</h1>
+          <h1 className="text-white text-2xl font-bold">AgroZenith</h1>
         </div>
         <ul className="flex space-x-4 text-white">
           {items.map((item) => (
