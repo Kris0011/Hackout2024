@@ -7,14 +7,14 @@ Explore how cutting-edge machine learning and data-driven solutions are transfor
 
 ### 1. NASA Fire Information Alert System
 
-![Satellite Monitoring](./asset/Fire)
+![Satellite Monitoring](./asset/Fire.jpg)
 - **Satellite Monitoring**: Continuous real-time monitoring of satellite data to detect active fires.
 - **Alert Notification**: Instant alerts triggered for fires detected within a 10km radius of the user's location.
 - **Resource Allocation**: Directing emergency response teams and resources efficiently.
 
 ### 2. Crop-Specific Fertilizer Recommendations
 
-![Fertilizer Recommendations](./asset/fertilizer)
+![Fertilizer Recommendations](./asset/fertilizer.jpg)
 - Tailored fertilizer suggestions based on specific crop needs, soil type, and environmental factors.
 
 ### 3. Online Auction Platform
@@ -24,5 +24,5 @@ Explore how cutting-edge machine learning and data-driven solutions are transfor
 - **Transparent Bidding Process**: Ensures fairness and transparency in all auctions.
 - **Real-Time Updates**: Stay informed on auction status and bid changes in real-time.
 
-![Websit photos](./asset/Home_page)
+![Websit photos](./asset/Home_page.png)
 
