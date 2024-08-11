@@ -54,7 +54,7 @@ function CropDetection() {
           boxShadow : '10 40px 8px 20 rgba(0,0,0,0.2)',
           color : 'white'
         }}
-        className='h-full w-full bg-gray-900 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-sm   bg-opacity-50 '
+        className=' bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100 '
       >
         <Form
           form={form}
@@ -121,7 +121,7 @@ function CropDetection() {
                   <Option value="Rice">Rice</Option>
                   <Option value="Sugarcane">Sugarcane</Option>
                   <Option value="Pulses">Pulses</Option>
-                  <Option value="Pomegranate">Pomegranate</Option>
+                  <Option value="pomegranate">Pomegranate</Option>
                 </Select>
               </Form.Item>
             </Col>
