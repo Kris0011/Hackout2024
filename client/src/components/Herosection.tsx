@@ -1,12 +1,6 @@
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
-  const navigate = useNavigate();
-
-  const handleLearnMoreClick = () => {
-    navigate('/docs');
-  };
+  
 
   return (
     <div>
