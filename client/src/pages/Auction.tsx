@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import * as io from "socket.io-client";
+import toast from "react-hot-toast";
 
 const { Title, Text } = Typography;
 
@@ -43,6 +44,10 @@ function Auction() {
   };
 
   const getAuctionRoom = (data: any) => {
+    if(!user?.user){
+      toast.error("Please login to join the auction");
+      return;
+    }
     try {
       dispatch({
         type: "SET_AUCTION",

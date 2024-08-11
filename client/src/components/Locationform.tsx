@@ -72,6 +72,15 @@ const LocationForm: React.FC = () => {
 
   return (
     <div className="p-4">
+      {
+
+nearest_fire_distance_km > 0 && (
+  <div className="mt-4">
+    <h2>Nearest Fire Distance: {nearest_fire_distance_km} km</h2>
+    <h2>Nearest Fire Location: Latitude {nearest_fire_location.latitude}, Longitude {nearest_fire_location.longitude}</h2>
+  </div>
+)
+}
       <Form
         form={form}
         layout="vertical"
@@ -87,21 +96,13 @@ const LocationForm: React.FC = () => {
           </p>
         </Item>
 
-        <Item>
-          <Button type="primary" htmlType="submit" onClick={getFire}>Submit</Button>
+        <Item style={{margin : "auto"}}>
+          <Button type="primary" htmlType="submit" onClick={getFire} style={{ margin : "auto"}}>Submit</Button>
         </Item>
       </Form>
 
 
-    {
-
-      nearest_fire_distance_km > 0 && (
-        <div className="mt-4">
-          <h2>Nearest Fire Distance: {nearest_fire_distance_km} km</h2>
-          <h2>Nearest Fire Location: Latitude {nearest_fire_location.latitude}, Longitude {nearest_fire_location.longitude}</h2>
-        </div>
-      )
-    }
+    
       
 
 

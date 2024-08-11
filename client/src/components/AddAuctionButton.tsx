@@ -3,14 +3,22 @@ import { FloatButton, Modal, Form, Input, DatePicker, Upload, Button } from 'ant
 import { PlusCircleFilled, UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 
 const AddAuctionButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<any>([]);
   const { user } = useSelector((state: any) => state.user);
+  
 
   const showModal = () => {
+
+    if(!user?.user){
+      toast.error("Please login to create auction");
+      return;
+    }
+
     setIsModalOpen(true);
   };
 
@@ -69,12 +77,16 @@ const AddAuctionButton = () => {
 
   return (
     <>
-      <FloatButton
+      
+      <Button
         type="primary"
-        shape="circle"
+        
+        size='large'
+        
         icon={<PlusCircleFilled />}
         onClick={showModal}
-      />
+        
+      >Sell Crops</Button>
 
       <Modal
         title="Create Auction"
