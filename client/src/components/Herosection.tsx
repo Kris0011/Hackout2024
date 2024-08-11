@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import bgImage from "../assets/Background.jpeg";
 import ff from "../assets/female_farmer.png";
 import mf from "../assets/male_farmer.png";
+import { use } from "i18next";
 
 const HeroSection = () => {
   const { t } = useTranslation();
@@ -25,6 +26,8 @@ const HeroSection = () => {
     //         </div>
     //     </section>
     // </div>
+
+    
     <div>
       <section
         className="relative isolate px-6 pt-14 lg:px-8 flex bg-cover"

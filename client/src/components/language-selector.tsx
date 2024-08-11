@@ -6,6 +6,7 @@ const LanguageSelector = () => {
 
   const changeLanguage = (language:string) => {
     i18n.changeLanguage(language);
+    console.log(i18n.language);
   };
 
   return (
