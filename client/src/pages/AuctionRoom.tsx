@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Card, Col, Input, Row, Typography } from "antd";
+import { Button, Card,  Input,  Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as io from "socket.io-client";
 import MyTimer from "../components/MyTimer";
 
+
 export default function AuctionRoom(props: any) {
   const { id } = useParams();
   const [expireTime, setExpireTime] = React.useState(null);
   const { user } = useSelector((state: any) => state.user);
-  const { auction } = useSelector((state: any) => state.auction);
   const [bids, setBids] = useState<{ bidAmount: number }[]>([]);
   const [bidder, setBidder] = useState("No Bidder");
   const navigate = useNavigate();
 
+  const [ auction, setAuction ] = useState<any>();
+
   const socket = io.connect("http://localhost:3000");
 
-  const [seller, setSeller] = useState<Object>();
+
 
   const dispatch = useDispatch();
 
@@ -36,9 +38,11 @@ export default function AuctionRoom(props: any) {
         payload: res.data.auction,
       });
 
+      setAuction(res.data.auction);
+
       socket.emit("join-room", {
         auctionId: res.data._id,
-        user: user.user,
+        user: user?.user,
       });
 
       if (!res.data) {
@@ -65,13 +69,10 @@ export default function AuctionRoom(props: any) {
     socket.emit("placeBid", {
       auction: auction,
       bidAmount: amount,
-      bidder: user.user,
+      bidder: user?.user,
     });
 
-    socket.on("bidPlaced", (data: any) => {
-      console.log("Bid Placed", data);
-      setBids([...bids, data]);
-    });
+   
   };
 
   useEffect(() => {
@@ -81,11 +82,21 @@ export default function AuctionRoom(props: any) {
     setExpireTime(expireTime as any);
     socket.emit("join-room", {
       auctionId: id,
-      user: user.user,
+      user: user?.user,
     });
 
     setBidder(auction?.bidder?.email);
   }, []);
+
+  useEffect(() => {
+    socket.on("updateAuction", ({ updatedAuction , bidder}: any) => {
+      console.log(updatedAuction);
+      
+      setAuction({
+        ...updatedAuction});
+      setBidder(bidder);
+    });
+  },[]);
 
   return (
     <div>

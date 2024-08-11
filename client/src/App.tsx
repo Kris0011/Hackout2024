@@ -6,14 +6,17 @@ import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PlantDiseaseDetction from "./pages/PlantDiseaseDetction";
 import Auction from "./pages/Auction";
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import i18 from "i18next";
+
+
+
+
 import Footer from "./components/Footersection";
 import AuctionRoom from "./pages/AuctionRoom";
-import ExampleDoc from "./components/docs/ExampleDoc";
+
 
 export default function App() {
   const dispatch = useDispatch();
@@ -48,7 +51,7 @@ export default function App() {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col font-primary">
       <Router>
         <Toaster />
         <Navbar />

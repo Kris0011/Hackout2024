@@ -8,11 +8,11 @@ const AuctionSchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
+    required: true, 
   },
   cropImage: {
-    publicId : String,
-    url : String,
+    type: String,
+    required: true,
   },
   startingPrice: {
     type: Number,
@@ -37,10 +37,6 @@ const AuctionSchema = new Schema({
   winner: {
     type: mongoose.Schema.ObjectId,
     ref: "User"
-  },
-  bidPrice: {
-    type: Number,
-    required: true,
   },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
