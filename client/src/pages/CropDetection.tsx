@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Input, Select, Button, Card, Row, Col, Typography, message } from 'antd';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { t } from 'i18next';
+import bgImage from "../assets/fertilizer.jpg"
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -9,34 +12,49 @@ function CropDetection() {
   const [form] = Form.useForm();
   const [fertilizerData, setFertilizerData] = useState(null);
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     // TODO: Handle form submission
     console.log('Form values:', values);
     
 
     try{
-      const res = axios.post("http://127.0.0.1:5000/fertilizer/predict", values);
+      const res = await axios.post("http://127.0.0.1:5000/fertilizer/predict", values);
       // console.log(res.data.);
+      setFertilizerData(res.data.predicted_fertilizer);
+      toast.success('Fertilizer suggested successfully');
 
     }
     catch (error){
       console.error("Failed to fetch fertilizer recommendations:", error)
+      toast.error("Failed to fetch fertilizer recommendations");
     }
 
     // message.success('Form submitted successfully!');
   };
 
   return (
-    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Title level={2} style={{ textAlign: 'center' }}>Crop Detection Form</Title>
+    <section  className="bg-cover h-screen" style={{ backgroundImage: `url(${bgImage})` }}>
+
+   
+    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' , marginTop : '120px' }}>
+      <Title level={2} style={{ textAlign: 'center' , background : 'white' , padding : '10px' , borderRadius : '10px' }}>Fertilizer Suggestion</Title>
+
+      {fertilizerData && (
+        <Card style={{ maxWidth: '600px', width: '100%', background : 'yellowgreen' }}>
+          <pre>The fertilizer suggested for you is <b>{fertilizerData}</b></pre>
+        </Card>
+      )}
+
       <Card
-        title="Crop Detection Form"
         style={{ 
           maxWidth: '600px', 
           width: '100%', 
           marginBottom: '20px', 
-          backgroundColor: 'rgb(200, 200, 200)' 
+          // backgroundColor: 'rgb(200, 200, 200)' 
+          boxShadow : '10 40px 8px 20 rgba(0,0,0,0.2)',
+          color : 'white'
         }}
+        className='h-full w-full bg-gray-900 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-sm   bg-opacity-50 '
       >
         <Form
           form={form}
@@ -44,9 +62,9 @@ function CropDetection() {
           onFinish={onFinish}
           style={{ backgroundColor: '', padding: '20px' }} >
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={12} style={{color : 'white'}}>
               <Form.Item
-                name="Temperature"
+                name="temperature"
                 label="Temperature"
                 rules={[{ required: true, message: 'Please input the temperature!' }]}
               >
@@ -55,9 +73,10 @@ function CropDetection() {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Humidity"
+                name="humidity"
                 label="Humidity"
                 rules={[{ required: true, message: 'Please input the humidity!' }]}
+                style={{color : 'white'}}
               >
                 <Input type="number" />
               </Form.Item>
@@ -66,7 +85,7 @@ function CropDetection() {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="Moisture"
+                name="moisture"
                 label="Moisture"
                 rules={[{ required: true, message: 'Please input the moisture!' }]}
               >
@@ -75,7 +94,7 @@ function CropDetection() {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Soil_Type"
+                name="soil_type"
                 label="Soil Type"
                 rules={[{ required: true, message: 'Please select the soil type!' }]}
               >
@@ -92,7 +111,7 @@ function CropDetection() {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="Crop_Type"
+                name="crop_type"
                 label="Crop Type"
                 rules={[{ required: true, message: 'Please select the crop type!' }]}
               >
@@ -108,7 +127,7 @@ function CropDetection() {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Nitrogen"
+                name="nitrogen"
                 label="Nitrogen"
                 rules={[{ required: true, message: 'Please input the nitrogen value!' }]}
               >
@@ -119,7 +138,7 @@ function CropDetection() {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="Potassium"
+                name="potassium"
                 label="Potassium"
                 rules={[{ required: true, message: 'Please input the potassium value!' }]}
               >
@@ -128,7 +147,7 @@ function CropDetection() {
             </Col>
             <Col span={12}>
               <Form.Item
-                name="Phosphorous"
+                name="phosphorous"
                 label="Phosphorous"
                 rules={[{ required: true, message: 'Please input the phosphorous value!' }]}
               >
@@ -144,12 +163,9 @@ function CropDetection() {
         </Form>
       </Card>
 
-      {fertilizerData && (
-        <Card title="Fertilizer Recommendations" style={{ maxWidth: '600px', width: '100%' }}>
-          <pre>{JSON.stringify(fertilizerData, null, 2)}</pre>
-        </Card>
-      )}
+     
     </div>
+    </section>
   );
 }
 

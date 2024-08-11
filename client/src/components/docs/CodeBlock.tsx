@@ -5,7 +5,7 @@ interface CodeBlockProps {
   language?: string;
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) => {
+const CodeBlock: React.FC<CodeBlockProps> = ({ code  = 'javascript' }) => {
   return (
     <pre style={{ background: '#f4f4f4', padding: '1rem', borderRadius: '5px' }}>
       <code>{code}</code>

@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
-import { GithubFilled } from "@ant-design/icons";
+
 import { useTranslation } from "react-i18next";
-import bgImage from "../assets/Background.jpeg";
-import ff from "../assets/female_farmer.png";
-import mf from "../assets/male_farmer.png";
+
 
 const HeroSection = () => {
   const { t } = useTranslation();
