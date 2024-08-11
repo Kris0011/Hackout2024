@@ -7,12 +7,20 @@ import * as io from "socket.io-client";
 import MyTimer from "../components/MyTimer";
 
 
-export default function AuctionRoom(props: any) {
+interface Bidder {
+  email: string;
+  name : string;
+  picture : string;
+}
+
+
+export default function AuctionRoom() {
   const { id } = useParams();
   const [expireTime, setExpireTime] = React.useState(null);
   const { user } = useSelector((state: any) => state.user);
   const [bids, setBids] = useState<{ bidAmount: number }[]>([]);
-  const [bidder, setBidder] = useState("No Bidder");
+  const [bidder, setBidder] = useState<Bidder>();
+  const [isBidder, setIsBidder] = useState(false);
   const navigate = useNavigate();
 
   const [ auction, setAuction ] = useState<any>();
@@ -89,12 +97,18 @@ export default function AuctionRoom(props: any) {
   }, []);
 
   useEffect(() => {
-    socket.on("updateAuction", ({ updatedAuction , bidder}: any) => {
-      console.log(updatedAuction);
+    socket.on("updateAuction", ({ updatedAuction , newBidder}: any) => {
+      // console.log(updatedAuction);
+
+      console.log(newBidder);
       
       setAuction({
         ...updatedAuction});
-      setBidder(bidder);
+      setBidder(newBidder);
+
+      setIsBidder(true);
+
+      setBids([...bids, { bidAmount: updatedAuction.currentPrice }]);
     });
   },[]);
 
@@ -128,6 +142,23 @@ export default function AuctionRoom(props: any) {
             <Typography.Title level={4}>
               Start Date : {new Date(auction?.startDate).toDateString()}
             </Typography.Title>
+
+            { isBidder &&
+            
+            <div>
+             <Typography.Title level={4}>
+              
+             Current Bidder : 
+            </Typography.Title>
+            
+            <div className="flex items-center space-x-10 m-4">
+                <img src={bidder?.picture} alt="bidder" className="h-10 w-10 rounded-full mr-4" />
+                {bidder?.name}
+              </div>
+              </div>
+              
+              }
+
 
             <div>
               <Input type="number" placeholder="Enter Bid Amount" />
