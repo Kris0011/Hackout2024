@@ -16,9 +16,9 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.SECRET,
-  baseURL: "http://localhost:3000",
+  baseURL: "https://hackout2024-1-nfp7.onrender.com",
   clientID: process.env.CLIENTID,
-  issuerBaseURL: "dev-ldqgeqtcnbdn8pau.us.auth0.com",
+  issuerBaseURL: "https://dev-opk6mmz5ceopsl1s.us.auth0.com",
 };
 
 app.use(auth(config));
