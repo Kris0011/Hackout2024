@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Form, Input, Select, Button, Card, Row, Col, Typography, message } from 'antd';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { t } from 'i18next';
 import bgImage from "../assets/fertilizer.jpg"
 
 const { Option } = Select;

@@ -1,4 +1,3 @@
-import React from 'react';
 import LocationForm from '../components/Locationform';
 function FireDetection() {
   return (

@@ -11,8 +11,9 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
-  ImageUrl: {
-    type: String,
+  image: {
+    data: Buffer,
+    contentType: String,
   },
   auctions: [
     {
