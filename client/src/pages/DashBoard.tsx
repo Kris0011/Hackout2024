@@ -16,22 +16,25 @@ const DashBoard: React.FC = () => {
     switch (selectedDoc) {
       case 'doc1':
         return (
-          <>
+          <div className='text-xl overflow-scroll'>
             <Title level={2}>Use Cases</Title>
             <h2 id="fire-detection">1. Fire Detection</h2>
             <p><strong>Actor:</strong> Farmer</p>
             <p><strong>Description:</strong> The farmer inputs their geographic location into the system using an interactive map. The system then queries the NASA FIRMS API to retrieve data on recent fire activity and fire risk in the selected area. If the API indicates a high risk of fire, the system sends an alert to the farmer via email or SMS, providing details about the risk level and recommended actions.</p>
             <p><strong>Example Scenario:</strong> A farmer in California inputs their farm location into the system. The system detects that there is an active wildfire near their location and immediately alerts them with information on the fire's proximity and suggested safety measures.</p>
 
+            <br />
             <h2 id="auction">2. Auction</h2>
             <p><strong>Actor:</strong> Farmers and Buyers</p>
             <p><strong>Description:</strong> Farmers can list their agricultural products for auction on the platform. Buyers browse the available listings and place bids on items they wish to purchase. The auction system uses WebSockets to provide real-time updates to all participants, ensuring that bid changes are instantly reflected and that the auction process is smooth and transparent.</p>
             <p><strong>Example Scenario:</strong> A farmer lists a batch of organic tomatoes for auction. Buyers place bids, and as the auction progresses, WebSockets ensure that all participants see the latest bid amounts and remaining time in real-time, facilitating a dynamic bidding environment.</p>
+            <br />
 
             <h2 id="fertilizer-prediction">3. Fertilizer Prediction</h2>
             <p><strong>Actor:</strong> Farmer</p>
             <p><strong>Description:</strong> The farmer inputs various data points about their crops, such as soil type, crop variety, and current growth stage. The system uses a Gaussian Naive Bayes model to analyze this data and predict the optimal type and amount of fertilizer needed. The system provides recommendations to the farmer, including the benefits of using specific fertilizers and application rates.</p>
             <p><strong>Example Scenario:</strong> A farmer provides data about their corn crop's soil conditions and growth stage. The system recommends a balanced fertilizer with specific nutrients, helping the farmer maximize crop yield and health.</p>
+            <br />
 
             <h2 id="additional-use-cases">4. Additional Use Cases</h2>
             <p><strong>4.1 Weather Alerts</strong></p>
@@ -43,7 +46,7 @@ const DashBoard: React.FC = () => {
             <p><strong>Actor:</strong> Farmer</p>
             <p><strong>Description:</strong> The system monitors crop health through various inputs like satellite imagery and sensor data. It provides farmers with insights into potential issues such as pest infestations or nutrient deficiencies.</p>
             <p><strong>Example Scenario:</strong> The system detects signs of a pest infestation in a farmer's field and alerts them with recommended actions to mitigate the issue.</p>
-          </>
+          </div>
         );
       case 'doc2':
         return (
@@ -95,9 +98,9 @@ const DashBoard: React.FC = () => {
   ];
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ height: '100%' }}>
       <Sidebar menuItems={menuItems} onMenuItemClick={handleMenuItemClick} />
-      <Layout style={{ padding: '0 24px 24px' }}>
+      <Layout style={{ padding: '0 5px 0.1px' }}>
         <Content
           style={{
             padding: 24,

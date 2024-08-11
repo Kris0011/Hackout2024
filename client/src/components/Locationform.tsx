@@ -3,11 +3,12 @@ import { Form, Button } from 'antd';
 import MapWithLocationPicker from './MapWithLocationPicker';
 import L from 'leaflet';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const { Item } = Form;
 
 interface Location {
-  latitide : number | null;
+  latitude : number | null;
   longitude: number | null;
 }
 
@@ -17,7 +18,7 @@ const LocationForm: React.FC = () => {
 
 
   const [form] = Form.useForm();
-  const [location, setLocation] = useState<Location>({ latitide : null, longitude: null });
+  const [location, setLocation] = useState<Location>({ latitude : null, longitude: null });
 
   const [nearest_fire_distance_km, setNearestFireDistanceKm] = useState<number>(0);
   const [nearest_fire_location, setNearestFireLocation] = useState<{latitude: number, longitude: number}>({latitude: 0, longitude: 0});
@@ -26,13 +27,21 @@ const LocationForm: React.FC = () => {
   const getFire = async () => {
 
     try {
-      const res = await axios.post("http://127.0.0.1:5000/nasa_firms/nearest_fire", location);
+      console.log(location);
+      const res = await axios.post("http://127.0.0.1:5000/nasa_firms/nearest_fire", location , {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       console.log(res.data);
       setNearestFireDistanceKm(res.data.distance);
       setNearestFireLocation(res.data.location);
+
+      toast.error('Be aware ! Nearest Fire Detected ! ');
     }
     catch (error) {
       console.error("Failed to fetch fire data:", error)
+      toast.success("No need to worry, No fire detected near you");
     }
   }
 
@@ -41,7 +50,7 @@ const LocationForm: React.FC = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setLocation({ latitide: latitude, longitude: longitude });
+          setLocation({ latitude: latitude, longitude: longitude });
         },
         (error) => {
           console.error('Error getting location:', error);
@@ -53,7 +62,7 @@ const LocationForm: React.FC = () => {
   }, []);
 
   const handleLocationSelect = (latlng: L.LatLng) => {
-    setLocation({ latitide: latlng.lat, longitude: latlng.lng });
+    setLocation({ latitude: latlng.lat, longitude: latlng.lng });
   };
 
   const handleFinish = (values: any) => {
@@ -71,10 +80,10 @@ const LocationForm: React.FC = () => {
         <Item label="Select a Location">
           <MapWithLocationPicker 
             onLocationSelect={handleLocationSelect} 
-            initialLocation={{ lat : location.latitide, lng: location.longitude }}
+            initialLocation={{ lat : location.latitude, lng: location.longitude }}
           />
           <p className="mt-2">
-            {location.latitide && location.longitude ? `Selected Location: Latitude ${location.latitide}, Longitude ${location.longitude}` : 'Click on the map to select a location.'}
+            {location.latitude && location.longitude ? `Selected Location: Latitude ${location.latitude}, Longitude ${location.longitude}` : 'Click on the map to select a location.'}
           </p>
         </Item>
 
@@ -84,9 +93,16 @@ const LocationForm: React.FC = () => {
       </Form>
 
 
-      <div>
-        <h2>{ nearest_fire_distance_km } :   {nearest_fire_location.latitude}   {nearest_fire_location.longitude}</h2>
-      </div>
+    {
+
+      nearest_fire_distance_km > 0 && (
+        <div className="mt-4">
+          <h2>Nearest Fire Distance: {nearest_fire_distance_km} km</h2>
+          <h2>Nearest Fire Location: Latitude {nearest_fire_location.latitude}, Longitude {nearest_fire_location.longitude}</h2>
+        </div>
+      )
+    }
+      
 
 
 

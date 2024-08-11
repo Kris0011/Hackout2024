@@ -24,7 +24,7 @@ function Navbar() {
 
   const items = [
     { label: 'Home', key: 'home', route: '/' },
-    { label: 'Dashboard', key: 'dashboard', route: '/dashboard' },
+    { label: 'Docs', key: 'docs', route: '/docs' },
     { label: 'Market', key: 'market', route: '/market' },
   ];
 

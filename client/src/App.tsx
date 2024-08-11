@@ -55,13 +55,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col font-primary">
       <Router>
         <Toaster />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/docs" element={<DashBoard />} />
           <Route path="/detection/crop" element={<CropDetection />} />
           <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
           <Route path="/market" element={<Auction />} />
