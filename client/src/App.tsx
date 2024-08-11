@@ -4,7 +4,6 @@ import FireDetection from "./pages/FireDetection";
 import DashBoard from "./pages/DashBoard";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import PlantDiseaseDetction from "./pages/PlantDiseaseDetction";
 import Auction from "./pages/Auction";
 import  { Toaster } from "react-hot-toast";
 import axios from "axios";
