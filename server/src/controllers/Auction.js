@@ -15,12 +15,12 @@ const createAuction = async (req, res) => {
       sellers
     } = req.body;
 
-    console.log(req.files.cropImg[0].path);
+    // console.log(req.files.cropImg[0].path);
     const local = await uploadoncloudinary(req.files.cropImg[0].path);
 
     // console.log(req.body)
     // console.log(sellers)
-    console.log(local);
+    // console.log(local);
     const user = await User.find({ email: sellers });
 
     // const cropImg = req.files ? req.file.filename : null;
@@ -77,7 +77,7 @@ const getAuctionById = async (req,res) => {
     const auction = await Auction.findById(id);
     return res.status(200).json({ auction });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return null;
   }
 };

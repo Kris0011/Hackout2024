@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import AddAuctionButton from "../components/AddAuctionButton";
-import { useSocket } from "../context/SocketContext";
 import { Card, Col, Row, Typography } from "antd";
-import bgImage from "../assets/Background.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // TODO: Remove dummy data
 
 import axios from "axios";
 import * as io from "socket.io-client";
-import AuctionRoom from "./AuctionRoom";
 
 const { Title, Text } = Typography;
 
@@ -25,9 +22,6 @@ interface Auction {
   seller: Object;
 }
 
-interface AuctionResponse {
-  auctions: Auction[];
-}
 
 function Auction() {
   const [auctions, setAuctions] = useState<Auction[]>([]);

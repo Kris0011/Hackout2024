@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, Button, Card, Row, Col, Typography, message } from 'antd';
+import  { useState } from 'react';
+import { Form, Input, Select, Button, Card, Row, Col, Typography } from 'antd';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { t } from 'i18next';
 import bgImage from "../assets/fertilizer.jpg"
 
 const { Option } = Select;
@@ -54,7 +53,7 @@ function CropDetection() {
           boxShadow : '10 40px 8px 20 rgba(0,0,0,0.2)',
           color : 'white'
         }}
-        className='h-full w-full bg-gray-900 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-sm   bg-opacity-50 '
+        className=' bg-white-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100 '
       >
         <Form
           form={form}
@@ -121,7 +120,7 @@ function CropDetection() {
                   <Option value="Rice">Rice</Option>
                   <Option value="Sugarcane">Sugarcane</Option>
                   <Option value="Pulses">Pulses</Option>
-                  <Option value="Pomegranate">Pomegranate</Option>
+                  <Option value="pomegranate">Pomegranate</Option>
                 </Select>
               </Form.Item>
             </Col>
