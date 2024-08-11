@@ -54,7 +54,7 @@ export default function App() {
       <Router>
         <Toaster />
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 mt-14">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/docs" element={<DashBoard />} />

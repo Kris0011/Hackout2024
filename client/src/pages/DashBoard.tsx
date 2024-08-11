@@ -3,6 +3,7 @@ import { Layout, Typography } from 'antd';
 import Sidebar from '../components/docs/Sidebar/Sidebar';
 import API from "../assets/API_working.jpeg";
 import { useTranslation } from 'react-i18next';
+import MyImage from "../assets/Bayes.jpeg";
 
 const { Content } = Layout;
 const { Title, Paragraph } = Typography;
@@ -61,7 +62,7 @@ const DashBoard: React.FC = () => {
             <p><strong>{t("MongoDB")}:</strong> {t("The database used to store user data, auction listings, and other relevant information.")}</p>
             <p><strong>{t("Socket.io")}:</strong> {t("Implements WebSocket communication for real-time updates during auctions, ensuring immediate reflection of bids and auction status.")}</p>
             <p><strong>{t("Gaussian Naive Bayes")}:</strong> {t("A machine learning model used for predicting optimal fertilizer requirements based on crop data.")}</p>
-
+            <img src={MyImage} className='w-[600px] mx-auto' alt={t("API working")} />
             <h2 id="api-integration">{t("2. API Integration Details")}</h2>
             <h3 id="nasa-firms">{t("2.1 NASA FIRMS API Integration")}</h3>
             <p><strong>{t("Purpose")}:</strong> {t("To retrieve data on fire activity and risk levels based on user-provided geographic locations.")}</p>
@@ -85,7 +86,7 @@ const DashBoard: React.FC = () => {
             <h2 id="nasa-firms" className="text-xl">{t("NASA FIRMS API Integration")}</h2>
             <p><strong>{t("Purpose")}:</strong> {t("To retrieve data on fire activity and risk levels based on user-provided geographic locations.")}</p>
             <p><strong>{t("How It Works")}:</strong> {t("The frontend sends location data to the backend, which then queries the NASA FIRMS API. The backend processes the API response and determines the fire risk, sending relevant alerts to the user.")}</p>
-            <img src={API} alt={t("API working")} />
+            <img src={API}  className='w-[600px] mx-auto' alt={t("API working")} />
             <p><strong>{t("Example Usage")}:</strong> {t("A farmer enters their location, and the system checks for recent fire activity in that area. If there is an active fire or high risk, the system alerts the farmer with necessary precautions.")}</p>
 
             <h2 id="future-enhancements" className="text-xl">{t("Future Enhancements")}</h2>
