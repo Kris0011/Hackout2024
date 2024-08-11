@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Card, Col, Input, Row, Typography } from "antd";
+import { Button, Card,  Input,  Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import * as io from "socket.io-client";
@@ -11,7 +11,6 @@ export default function AuctionRoom(props: any) {
   const { id } = useParams();
   const [expireTime, setExpireTime] = React.useState(null);
   const { user } = useSelector((state: any) => state.user);
-  // const { auction } = useSelector((state: any) => state.auction);
   const [bids, setBids] = useState<{ bidAmount: number }[]>([]);
   const [bidder, setBidder] = useState("No Bidder");
   const navigate = useNavigate();
