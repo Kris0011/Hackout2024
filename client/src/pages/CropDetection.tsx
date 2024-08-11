@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import { Form, Input, Select, Button, Card, Row, Col, Typography, message } from 'antd';
+import { Form, Input, Select, Button, Card, Row, Col, Typography } from 'antd';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import bgImage from "../assets/fertilizer.jpg"

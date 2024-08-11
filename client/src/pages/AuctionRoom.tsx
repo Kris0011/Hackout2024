@@ -14,7 +14,7 @@ interface Bidder {
 }
 
 
-export default function AuctionRoom(props: any) {
+export default function AuctionRoom() {
   const { id } = useParams();
   const [expireTime, setExpireTime] = React.useState(null);
   const { user } = useSelector((state: any) => state.user);
@@ -107,6 +107,8 @@ export default function AuctionRoom(props: any) {
       setBidder(newBidder);
 
       setIsBidder(true);
+
+      setBids([...bids, { bidAmount: updatedAuction.currentPrice }]);
     });
   },[]);
 
