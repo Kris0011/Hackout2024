@@ -70,11 +70,12 @@ io.on("connection", (socket) => {
     if (currentAuction) {
       currentAuction.currentPrice += data.bidAmount;
 
-      const bidder = await User.findById(data.bidder._id);
-      // console.log(data.bidder);
-     if(bidder){
-       currentAuction.winner = bidder._id;
-     }
+    //   const bidder = await User.findById(data.bidder._id);
+    //   // console.log(data.bidder);
+    //   console.log(bidder);
+    //  if(bidder){
+    //    currentAuction.winner = bidder._id;
+    //  }
     }
 
     await currentAuction.save();
@@ -83,7 +84,7 @@ io.on("connection", (socket) => {
 
     io.to(data.auction._id).emit("updateAuction", {
       updatedAuction: currentAuction,
-      bidder: data.bidder,
+      newBidder: data.bidder,
     });
   });
 });
