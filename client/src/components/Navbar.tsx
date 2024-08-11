@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate , NavLink } from 'react-router-dom'; 
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
@@ -12,9 +12,6 @@ function Navbar() {
   const navigate = useNavigate(); 
 
   const { user } = useSelector((state: any) => state.user);
-
-
-
 
   const advancedToolsItems = [
     { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
@@ -73,10 +70,14 @@ function Navbar() {
     </Menu>
   );
 
+  const handleLogoClick = () => {
+    navigate('/'); // Navigate to the home page
+  };
+
   return (
     <nav className="bg-[#16302B] border-b border-gray-700 z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
           <img src={Logo} alt="Logo" className="h-10 mr-3" />
           <h1 className="text-white text-2xl font-bold">DevBlogs</h1>
         </div>
