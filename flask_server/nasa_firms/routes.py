@@ -47,11 +47,15 @@ def nearest_fire():
     data = request.json
     user_lat = data.get('latitude')
     user_lon = data.get('longitude')
-
+    print(user_lat , user_lon) 
+    
     if user_lat is None or user_lon is None:
         return jsonify({'error': 'Invalid input. Please provide latitude and longitude.'}), 400
 
     nearest_distance, nearest_lat, nearest_lon = min_distance(user_lat, user_lon)
+    
+    if nearest_distance >= 10:
+        return jsonify({'message': 'No fires detected within 10 km radius.'}), 404 
 
     response = {
         'nearest_fire_distance_km': nearest_distance,
