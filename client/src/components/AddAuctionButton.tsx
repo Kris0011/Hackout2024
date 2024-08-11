@@ -8,7 +8,7 @@ const AddAuctionButton = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<any>([]);
-  const { user }  = useSelector((state: any) => state.user);
+  const { user } = useSelector((state: any) => state.user);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -16,7 +16,7 @@ const AddAuctionButton = () => {
 
   const handleOk = async () => {
     try {
-      await handlecreateauction(); 
+      await handlecreateauction();
       setIsModalOpen(false);
       form.resetFields();
     } catch (error) {
@@ -32,26 +32,34 @@ const AddAuctionButton = () => {
   const handlecreateauction = async () => {
     try {
       const formValues = form.getFieldsValue();
+      const formData = new FormData();
 
-      const auctionObject = {
-        title: formValues.title,
-        description: formValues.description,
-        cropImg: formValues.cropImage,
-        startingPrice: formValues.startingPrice,
-        currentPrice: formValues.startingPrice,
-        startDate: formValues.startDate,
-        endDate: formValues.endDate,
-        status: "active",
-        sellers: user?.user?.email, 
-      };
+      formData.append('title', formValues.title);
+      formData.append('description', formValues.description);
+      formData.append('startingPrice', formValues.startingPrice);
+      formData.append('currentPrice', formValues.startingPrice);
+      formData.append('startDate', formValues.startDate.format('YYYY-MM-DD'));
+      formData.append('endDate', formValues.endDate.format('YYYY-MM-DD'));
+      formData.append('status', 'active');
+      formData.append('sellers', user?.user?.email);
 
-      console.log("Auction Object:", auctionObject);
+      if (fileList.length > 0) {
+        fileList.forEach((file: any) => {
+          formData.append('cropImg', file.originFileObj);
+        });
+      }
 
-      // Send the auction object to the server
-      const res = await axios.post("http://localhost:3000/api/createauctions", auctionObject, { withCredentials: true });
-      console.log("Auction created successfully:", res.data);
+      console.log('Auction Object:', formData);
+
+      const res = await axios.post('http://localhost:3000/api/createauctions', formData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Auction created successfully:', res.data);
     } catch (error) {
-      console.error("Failed to create auction:", error);
+      console.error('Failed to create auction:', error);
     }
   };
 
@@ -79,6 +87,7 @@ const AddAuctionButton = () => {
         <Form
           form={form}
           layout="vertical"
+          encType="multipart/form-data"
         >
           <Form.Item
             name="title"
@@ -97,16 +106,14 @@ const AddAuctionButton = () => {
           </Form.Item>
 
           <Form.Item
-            name="cropImage"
-            label="Crop Image"
-            extra="Upload an image of the crop"
+            name="cropImg"
+            label="Upload Image"
           >
             <Upload
               listType="picture"
-              showUploadList={true}
+              beforeUpload={() => false}
               fileList={fileList}
               onChange={handleFileChange}
-              beforeUpload={() => false}
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
