@@ -1,26 +1,25 @@
-
 import { useTranslation } from "react-i18next";
-
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
+  const handleLearnMoreClick = () => {
+    navigate('/docs');
+  };
 
   return (
-
-
-    
     <div>
       <section
         className="relative isolate px-6 pt-14 lg:px-8 flex bg-cover"
-        
       >
-        
-        <div className="mx-auto max-w-4xl l py-32 sm:py-48 lg:pb-56 lg:pt-32">
-          <div className="text-center px-10 py-20 h-full w-full bg-gray-900 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-sm  bg-opacity-50  ">
+        <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:pb-56 lg:pt-32">
+          <div className="text-center px-10 py-20 h-full w-full bg-gray-900 rounded-xl bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50">
             <h1 className="text-4xl font-bold tracking-tight text-gray-100 sm:text-6xl">
-              Empower Your Farming Experience
+              Cultivating a Brighter Future for Agriculture
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-200">
-              Choose the right fertilizer, bid on agricultural auctions, and grow your farm with expert insights.
+              "The farmer is the only man in our economy who buys everything at retail, sells everything at wholesale, and pays the freight both ways." – John F. Kennedy
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
@@ -34,7 +33,7 @@ const HeroSection = () => {
                 className="text-sm font-semibold leading-6 text-gray-300"
               >
                 Learn more <span aria-hidden="true">→</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>

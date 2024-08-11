@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import CropDetection from "./pages/CropDetection";
-import FireDetection from "./pages/FireDetection";  
+import FireDetection from "./pages/FireDetection";
 import DashBoard from "./pages/DashBoard";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -19,22 +19,21 @@ import AuctionRoom from "./pages/AuctionRoom";
 
 
 export default function App() {
-
   const dispatch = useDispatch();
-  
+
   const findUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/getuser" , { withCredentials: true });
+      const res = await axios.get("http://localhost:3000/getuser", { withCredentials: true });
 
       console.log(res.data);
 
-      if(!res.data.loggedIn){
+      if (!res.data.loggedIn) {
         console.log("No user found");
         dispatch({
           type: "CLEAR_USER",
         });
         return;
-      }    
+      }
 
       dispatch({
         type: "SET_USER",
@@ -49,29 +48,25 @@ export default function App() {
 
   useEffect(() => {
     findUser();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen flex flex-col font-primary">
       <Router>
         <Toaster />
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/docs" element={<DashBoard />} />
-          <Route path="/detection/crop" element={<CropDetection />} />
-          <Route path="/detection/plant-disease" element={<PlantDiseaseDetction />} />
-          <Route path="/market" element={<Auction />} />
-          <Route path="/market/:id" element={<AuctionRoom />} />
-          {/* <Route path="/auction" element={<Auction />} /> */}
-          <Route path="/fire-predictor" element={<FireDetection />} />
-
-
-
-        </Routes>
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/docs" element={<DashBoard />} />
+            <Route path="/detection/crop" element={<CropDetection />} />
+            <Route path="/market" element={<Auction />} />
+            <Route path="/market/:id" element={<AuctionRoom />} />
+            <Route path="/fire-predictor" element={<FireDetection />} />
+          </Routes>
+        </main>
         <Footer />
       </Router>
-
     </div>
   );
 }
