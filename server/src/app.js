@@ -6,7 +6,6 @@ import http from "http";
 import { Server } from "socket.io";
 import AuctionRouter from "./Routes/AuctionRouter.js";
 import { Auction } from "./models/Auction.js";
-import { User } from "./models/User.js";
 
 const app = express();
 

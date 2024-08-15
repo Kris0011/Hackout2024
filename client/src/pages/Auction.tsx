@@ -3,7 +3,6 @@ import AddAuctionButton from "../components/AddAuctionButton";
 import { Card, Col, Row, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// TODO: Remove dummy data
 
 import axios from "axios";
 import * as io from "socket.io-client";
