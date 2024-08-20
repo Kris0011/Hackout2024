@@ -1,15 +1,14 @@
-import pkg from 'express-openid-connect';  
-const { requiresAuth } = pkg;
+import { IsAuthenticated } from '../Middleware/IsAuthinticated.js';
 import express from 'express';
-import { userLoginCallback,getuser , getUserById } from '../controllers/user.js';
+import { getUser , getUserById,userLoginCallback } from '../controllers/user.js';
 
 const userRouter = express.Router();
 
-userRouter.route("/").get(userLoginCallback);
+userRouter.route("/").get(IsAuthenticated,userLoginCallback);
 
-userRouter.route("/getuser").get(getuser);
+userRouter.route("/getuser").get(IsAuthenticated,getUser);
 
-userRouter.route("/getuserbyid").post(getUserById);
+userRouter.route("/getuserbyid").post(IsAuthenticated,getUserById);
 
 
 

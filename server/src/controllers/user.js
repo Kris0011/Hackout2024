@@ -1,12 +1,11 @@
 import  {User } from "../models/User.js";
-import apierror from "../utills/ApiError.js"
+import apierror from "../utills/ApiError.js";
 
 export const userLoginCallback = async (req, res) => {
     try {
-        if (req.oidc.isAuthenticated()) {
-            // console.log(req.oidc.user);
+        if (req.isAuthenticated()) {
 
-            const {name,picture,email} = req.oidc.user;
+            const {name,picture,email} = req.user;
 
             
             if(!name || !email){
@@ -16,7 +15,7 @@ export const userLoginCallback = async (req, res) => {
             const existeduser = await User.find({
                 email
             })
-            // console.log("user is present " + existeduser);
+            console.log("user is present " + existeduser);
 
             if(existeduser.length === 0){
                 const user = new User({
@@ -61,31 +60,30 @@ export const getUserById = async (req,res) => {
     }
 }
 
-export const getuser = async (req,res) => {
+
+export const getUser = async (req, res) => {
     try {
-        // if (req.oidc.isAuthenticated()) {
-        //     // return res.status(200).json(req.oidc.user); 
-        //     const user = await User.findOne(
-        //         {email:req.oidc.user.email}
-        //     );
-        //     if(!user){
-        //         return res.status(400).json(new apierror(400,"User not found"));  
-        //     }
-        //     return res.status(200).json(user);
-            
-        // }
-        // else{
-        //     return res.status(200).json(new apierror(200,"You are not logged in"));  
-        // }
-       return res.json({loggedIn: req.oidc.isAuthenticated(), user: req.oidc.user});
+        // console.log(req);
+        // console.log(req.isAuthenticated());
+        // console.log(req.session);
+        if (req.isAuthenticated()) {
+            // Retrieve the user information from the session
+            const user = await User.findOne({ _id: req.user._id });
 
-        
+            if (!user) {
+                return res.status(400).json(new apierror(400, "User not found"));
+            }
 
+            return res.status(200).json({user, isAuthenticated: true});
+        } else {
+            return res.status(200).json(new apierror(200, "You are not logged in"));
+        }
     } catch (error) {
         console.error("Error during authentication:", error);
         return res.status(500).json({ message: 'Internal Server Error' });
     }
-}
+};
+
 
 
 

@@ -9,10 +9,6 @@ import  { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
-
-
-
 import Footer from "./components/Footersection";
 import AuctionRoom from "./pages/AuctionRoom";
 
@@ -25,8 +21,7 @@ export default function App() {
       const res = await axios.get("http://localhost:3000/getuser", { withCredentials: true });
 
       console.log(res.data);
-
-      if (!res.data.loggedIn) {
+      if (!res.data.isAuthenticated) {
         console.log("No user found");
         dispatch({
           type: "CLEAR_USER",
@@ -39,15 +34,15 @@ export default function App() {
         payload: res.data,
       });
 
-      console.log(res.data);
+      // console.log(res.data);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
   useEffect(() => {
     findUser();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col font-primary">

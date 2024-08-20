@@ -78,7 +78,7 @@ function Navbar() {
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
           <img src={Logo} alt="Logo" className="h-10 mr-3" />
-          <h1 className="text-white text-2xl font-bold">DevBlogs</h1>
+          <h1 className="text-white text-2xl font-bold">Agro Zenith</h1>
         </div>
         <ul className="flex space-x-6 text-white">
           {items.map((item) => (
@@ -112,7 +112,7 @@ function Navbar() {
             {user ? (
               <DropDown />
             ) : (
-              <a href="http://localhost:3000/login">
+              <a href="http://localhost:3000/auth/google">
                 <Button type="primary" size='large'>Login</Button>
               </a>
             )}

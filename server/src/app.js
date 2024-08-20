@@ -1,32 +1,28 @@
 import express from "express";
 import cors from "cors";
-import { auth } from "express-openid-connect";
 import userRouter from "./Routes/userRouter.js";
 import http from "http";
 import { Server } from "socket.io";
 import AuctionRouter from "./Routes/AuctionRouter.js";
 import { Auction } from "./models/Auction.js";
+import passport from "passport";
+import session from "express-session";
+import "./utills/auth.js";
 
 const app = express();
 
-const server = http.createServer(app);
-
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.SECRET,
-  baseURL: "https://hackout2024-1-nfp7.onrender.com",
-  clientID: process.env.CLIENTID,
-  issuerBaseURL: "https://dev-opk6mmz5ceopsl1s.us.auth0.com",
-};
-
-app.use(auth(config));
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
+
+
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true })); 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -34,15 +30,52 @@ app.use(express.static("public"));
 app.use("/", userRouter);
 app.use("/api", AuctionRouter);
 
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+app.get("/google/callback", passport.authenticate("google", {
+  failureRedirect: "/auth/failure",
+}), (req, res) => {
+  // console.log(req.user);
+  req.session.isAuthenticated = true;
+  req.session.user = req.user;
+  // console.log("User authenticated");
+  res.redirect("http://localhost:5173"); 
+});
+
+app.get("/auth/failure", (req, res) => {
+  res.send("Failed to login");
+});
+
+app.get("/logout", (req, res, next) => {
+  console.log("Logging out user");
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Session destroy error:", err);
+      return next(err);
+    }
+
+    console.log("Session destroyed:", req.session);
+    res.clearCookie("connect.sid", { path: '/' });
+    res.cookie("connect.sid", "");
+
+    res.status(200).send("Logged out successfully");
+  });
+});
+
+
+const server = http.createServer(app);
+
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
   },
 });
 
 io.on("connection", (socket) => {
+  console.log("A user connected");
+
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
@@ -55,10 +88,7 @@ io.on("connection", (socket) => {
   socket.on("placeBid", async (data) => {
     console.log(data.bidAmount);
 
-    // const currentAuction = await Auction.findById(data.auction._id);
     const currentAuction = await Auction.findById(data.auction._id);
-    // console.log(data);
-
     console.log(currentAuction);
 
     if (!currentAuction) {
@@ -66,20 +96,16 @@ io.on("connection", (socket) => {
       return;
     }
 
-    if (currentAuction) {
-      currentAuction.currentPrice += data.bidAmount;
+    // Update auction's current price
+    currentAuction.currentPrice += data.bidAmount;
 
-    //   const bidder = await User.findById(data.bidder._id);
-    //   // console.log(data.bidder);
-    //   console.log(bidder);
-    //  if(bidder){
-    //    currentAuction.winner = bidder._id;
-    //  }
-    }
+    // Uncomment if you have a User model and want to update the winner
+    // const bidder = await User.findById(data.bidder._id);
+    // if (bidder) {
+    //   currentAuction.winner = bidder._id;
+    // }
 
     await currentAuction.save();
-
-
 
     io.to(data.auction._id).emit("updateAuction", {
       updatedAuction: currentAuction,

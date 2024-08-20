@@ -34,7 +34,7 @@ function Auction() {
 
   const fetchAuctions = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/auctions");
+      const res = await axios.get("http://localhost:3000/api/auctions",{withCredentials:true});
       setAuctions(res.data.auctions);
       console.log("Auctions fetched successfully:", res.data.auctions);
     } catch (error) {

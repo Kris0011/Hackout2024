@@ -1,10 +1,12 @@
-const isAuthenticated =  (req, res, next) => {
-    console.log("hii inside isauthenticated" +  req.oidc.isAuthenticated());
-    if (req.oidc.isAuthenticated()) {
-        next();
-    }
-    else
-    return res.status(401).json({ message: 'Unauthorized' });
-}
+import apierror from "../utills/ApiError.js";
 
-export { isAuthenticated }; 
+export const IsAuthenticated = (req, res, next) => {
+    
+    console.log("isAuthenticated: ", req.isAuthenticated());
+
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        return res.status(401).send(new apierror(401, "User is not logged in"));
+    }
+};

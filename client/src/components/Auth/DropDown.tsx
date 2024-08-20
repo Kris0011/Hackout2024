@@ -4,22 +4,32 @@ import type { MenuProps } from "antd";
 import { Button, Dropdown, Space } from "antd";
 import { useSelector } from "react-redux";
 import { Avatar } from "antd";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 
 
 export default function DropDown() {
+  const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user.user);
   const UserAvatar: React.FC = () => (
-    <Avatar size="default" src={user?.picture} className="mr-2" />
+    <Avatar size="default" src={user?.ImageUrl} className="mr-2" />
   );
 
-  console.log(user?.picture);
+  // console.log(user?.ImageUrl);
 
 
   const logout = async() => {
     try{
-     
-        window.location.href = "http://localhost:3000/logout";
+        
+      await axios.get("http://localhost:3000/logout", { withCredentials: true });
+      dispatch({
+        type: "CLEAR_USER",
+      });
+      dispatch({
+        type: "SET_USER",
+        payload: null,
+      });
 
     }catch(err){
       console.error(err);
