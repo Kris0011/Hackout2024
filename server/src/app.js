@@ -9,6 +9,7 @@ import passport from "passport";
 import session from "express-session";
 import "./utills/auth.js";
 import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
 
 const app = express();
 const JWT_SECRET = process.env.JWT_SECRET || '---------KrisPatel---------';
