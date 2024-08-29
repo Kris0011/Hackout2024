@@ -33,6 +33,9 @@ function Auction() {
   const dispatch = useDispatch();
 
   const fetchAuctions = async () => {
+    if(!user){
+      navigate("/");
+    }
     try {
       const res = await axios.get("http://localhost:3000/api/auctions",{withCredentials:true});
       setAuctions(res.data.auctions);
@@ -104,7 +107,7 @@ function Auction() {
           >
             Active Auctions
           </Title>
-          <Row gutter={16} className="flex md:flex-row flex-col">
+          <Row gutter={16} className="flex md:flex-row flex-col justify-center items-center">
             {activeAuctions.map((auction: any, index: any) => (
               <Col key={index} className = "md:w-[300px]">
                 <Card
@@ -181,9 +184,9 @@ function Auction() {
           >
             Inactive Auctions
           </Title>
-          <Row gutter={16}>
+          <Row gutter={16} className="flex md:flex-row flex-col justify-center items-center">
             {inactiveAuctions.map((auction: any, index: any) => (
-              <Col span={8} key={index}>
+              <Col  key={index} className = "md:w-[300px]">
                 <Card
                   hoverable
                   cover={
@@ -193,7 +196,7 @@ function Auction() {
                       className="w-full h-48 object-cover"
                     />
                   }
-                  className="shadow-lg"
+                  className="shadow-lg my-4"
                 >
                   <Card.Meta
                     title={
@@ -240,9 +243,9 @@ function Auction() {
         >
           Completed Auctions
         </Title>
-        <Row gutter={16}>
+        <Row gutter={16} className="flex md:flex-row flex-col justify-center items-center">
           {completedAuctions.map((auction: any, index: any) => (
-            <Col span={8} key={index}>
+            <Col  key={index} className = "md:w-[300px]">
               <Card
                 hoverable
                 cover={
@@ -252,7 +255,7 @@ function Auction() {
                     className="w-full h-48 object-cover"
                   />
                 }
-                className="shadow-lg"
+                className="shadow-lg my-4"
               >
                 <Card.Meta
                   title={
