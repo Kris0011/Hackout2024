@@ -19,7 +19,7 @@ interface Auction {
   startDate: string;
   endDate: string;
   status: string;
-  seller: Object;
+  seller: object;
 }
 
 
@@ -96,7 +96,7 @@ function Auction() {
         <AddAuctionButton />
       </div>
 
-      {activeAuctions.length && (
+      {activeAuctions.length != 0 && (
         <div className="max-w-6xl mx-auto">
           <Title
             level={2}
@@ -104,16 +104,16 @@ function Auction() {
           >
             Active Auctions
           </Title>
-          <Row gutter={16}>
+          <Row gutter={16} className="flex md:flex-row flex-col">
             {activeAuctions.map((auction: any, index: any) => (
-              <Col span={8} key={index}>
+              <Col key={index} className = "md:w-[300px]">
                 <Card
                   hoverable
                   cover={
                     <img
                       alt="crop"
                       src={auction.cropImage}
-                      className="w-full h-48 object-cover"
+                      className="md:w-full h-48 object-cover"
                     />
                   }
                   className="shadow-lg my-4"
@@ -173,7 +173,7 @@ function Auction() {
         </div>
       )}
 
-      {inactiveAuctions.length && (
+      {inactiveAuctions.length != 0 && (
         <div className="max-w-6xl mx-auto">
           <Title
             level={2}

@@ -20,7 +20,7 @@ function CropDetection() {
       const res = await axios.post("http://127.0.0.1:5000/fertilizer/predict", values);
       // console.log(res.data.);
       setFertilizerData(res.data.predicted_fertilizer);
-      toast.success('Fertilizer suggested successfully');
+      toast.success('Fertilizer suggested successfully, ' + res.data.predicted_fertilizer);
 
     }
     catch (error){

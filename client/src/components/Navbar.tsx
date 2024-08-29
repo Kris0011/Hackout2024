@@ -1,22 +1,18 @@
 import { useState, useEffect } from 'react';
+import i18n from 'i18next';
+import { CloseOutlined, DownOutlined } from '@ant-design/icons';
+import { Drawer, Button, Dropdown } from 'antd';
+import MenuIcon from "../assets/stack.png";
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Menu, Button, Dropdown } from 'antd';
 import Logo from '../assets/LOGO.png';
 import DropDown from './Auth/DropDown';
-import i18n from 'i18next';
-import { DownOutlined } from '@ant-design/icons';
 
 function Navbar() {
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const [language, setLanguage] = useState('English');
   const navigate = useNavigate();
-
   const { user } = useSelector((state: any) => state.user);
-
-  const advancedToolsItems = [
-    { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
-    { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
-  ];
 
   const items = [
     { label: 'Home', key: 'home', route: '/' },
@@ -24,18 +20,15 @@ function Navbar() {
     { label: 'Market', key: 'market', route: '/market' },
   ];
 
+  const advancedToolsItems = [
+    { label: 'Fire Predictor', key: 'tool1', route: '/fire-predictor' },
+    { label: 'Fertilizer Predictor', key: 'tool2', route: '/detection/crop' },
+  ];
+
   const languageItems = [
     { label: 'English', key: 'en' },
     { label: 'हिन्दी', key: 'hi' },
   ];
-
-  const handleAdvancedToolsClick = (route: string) => {
-    navigate(route);
-  };
-
-  const handleLanguageChange = ({ key }: { key: string }) => {
-    setLanguage(key === 'en' ? 'English' : 'हिन्दी');
-  };
 
   useEffect(() => {
     let languageCode;
@@ -49,28 +42,19 @@ function Navbar() {
     console.log(languageCode);
   }, [language]);
 
-  const advancedToolsMenu = (
-    <Menu>
-      {advancedToolsItems.map(item => (
-        <Menu.Item key={item.key} onClick={() => handleAdvancedToolsClick(item.route)}>
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+  const handleDrawerOpen = () => setDrawerVisible(true);
+  const handleDrawerClose = () => setDrawerVisible(false);
 
-  const languageMenu = (
-    <Menu onClick={handleLanguageChange}>
-      {languageItems.map(item => (
-        <Menu.Item key={item.key}>
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+  const handleLanguageChange = (key: string) => {
+    setLanguage(key === 'en' ? 'English' : 'हिन्दी');
+  };
+  
+  const handleAdvancedToolsClick = (route: string) => {
+    navigate(route);
+  };
 
   const handleLogoClick = () => {
-    navigate('/'); 
+    navigate('/');
   };
 
   return (
@@ -78,9 +62,10 @@ function Navbar() {
       <div className="container mx-auto flex items-center justify-between p-4">
         <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
           <img src={Logo} alt="Logo" className="h-10 mr-3" />
-          <h1 className="text-white text-2xl font-bold">Agro Zenith</h1>
+          <h1 className="text-white text-2xl font-bold">AgroZenith</h1>
         </div>
-        <ul className="flex space-x-6 text-white">
+
+        <ul className="hidden md:flex space-x-6 text-white">
           {items.map((item) => (
             <li key={item.key}>
               <NavLink
@@ -96,14 +81,43 @@ function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="flex items-center space-x-3">
-          <Dropdown overlay={languageMenu}>
+
+        <div className="hidden md:flex items-center space-x-3">
+          <Dropdown
+            overlay={
+              <ul className="bg-white shadow-lg rounded-lg p-2">
+                {languageItems.map((item) => (
+                  <li
+                    key={item.key}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleLanguageChange(item.key)}
+                  >
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            }
+          >
             <Button size="large" className="bg-gray-800 text-white">
               {language}
             </Button>
           </Dropdown>
-          <Dropdown overlay={advancedToolsMenu}>
-            <Button size='large' className="bg-gray-800 text-white">
+          <Dropdown
+            overlay={
+              <ul className="bg-white shadow-lg rounded-lg p-2">
+                {advancedToolsItems.map((item) => (
+                  <li
+                    key={item.key}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleAdvancedToolsClick(item.route)}
+                  >
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            }
+          >
+            <Button size="large" className="bg-gray-800 text-white">
               Advanced Tools
               <DownOutlined />
             </Button>
@@ -113,12 +127,94 @@ function Navbar() {
               <DropDown />
             ) : (
               <a href="http://localhost:3000/auth/google">
-                <Button type="primary" size='large'>Login</Button>
+                <Button type="primary" size="large">Login</Button>
               </a>
             )}
           </div>
         </div>
+
+        <button
+          onClick={handleDrawerOpen}
+          className="md:hidden text-white hover:text-gray-300"
+        >
+          <img 
+            src={MenuIcon}
+            alt="Menu"
+            className="h-7 w-7"
+          />
+        </button>
       </div>
+      <Drawer
+        title="AgroZenith"
+        placement="right"
+        onClose={handleDrawerClose}
+        visible={drawerVisible}
+        closeIcon={<CloseOutlined />}
+        className="md:hidden"
+      >
+        <ul className="space-y-4">
+          {items.map((item) => (
+            <li key={item.key} onClick={handleDrawerClose}>
+              <NavLink
+                to={item.route}
+                className="block py-2 px-4 rounded-lg transition-colors duration-300 hover:bg-gray-200"
+              >
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 space-y-4">
+          <Dropdown
+            overlay={
+              <ul className="bg-white shadow-lg rounded-lg p-2">
+                {languageItems.map((item) => (
+                  <li
+                    key={item.key}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleLanguageChange(item.key)}
+                  >
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            }
+          >
+            <Button size="large" className="w-full bg-gray-800 text-white">
+              {language}
+            </Button>
+          </Dropdown>
+          <Dropdown
+            overlay={
+              <ul className="bg-white shadow-lg rounded-lg p-2">
+                {advancedToolsItems.map((item) => (
+                  <li
+                    key={item.key}
+                    className="p-2 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleAdvancedToolsClick(item.route)}
+                  >
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            }
+          >
+            <Button size="large" className="w-full bg-gray-800 text-white">
+              Advanced Tools
+              <DownOutlined />
+            </Button>
+          </Dropdown>
+          <div>
+            {user ? (
+              <DropDown />
+            ) : (
+              <a href="http://localhost:3000/auth/google">
+                <Button type="primary" size="large" className="w-full">Login</Button>
+              </a>
+            )}
+          </div>
+        </div>
+      </Drawer>
     </nav>
   );
 }
