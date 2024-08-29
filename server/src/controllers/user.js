@@ -63,14 +63,14 @@ export const getUserById = async (req,res) => {
 
 export const getUser = async (req, res) => {
     try {
-        // console.log(req);
-        // console.log(req.isAuthenticated());
-        // console.log(req.session);
+        const { email } = req.user;
+        // console.log("user is present " + email);
+        // console.log(req.isAuthenticated() + " " + req.user);
         if (req.isAuthenticated()) {
-            // Retrieve the user information from the session
-            const user = await User.findOne({ _id: req.user._id });
+            const user = await User.findOne({ email });
 
             if (!user) {
+                console.log("User not found");
                 return res.status(400).json(new apierror(400, "User not found"));
             }
 

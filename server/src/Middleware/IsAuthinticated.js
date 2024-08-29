@@ -5,6 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || '---------KrisPatel---------';
 
 export const IsAuthenticated = (req, res, next) => {
     const token = req.cookies.jwt;
+    // console.log("hii" + token);
 
     if (!token) {
         return res.status(401).send(new apierror(401, "User is not logged in"));

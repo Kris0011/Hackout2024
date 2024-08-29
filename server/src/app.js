@@ -44,6 +44,7 @@ app.get("/google/callback", passport.authenticate("google", {
   const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
     expiresIn: '1h',
   });
+  req.isAuthenticated = true;
 
   res.cookie('jwt', token, {
     httpOnly: true,
