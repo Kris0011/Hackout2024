@@ -8,8 +8,10 @@ import { Auction } from "./models/Auction.js";
 import passport from "passport";
 import session from "express-session";
 import "./utills/auth.js";
+import cookieParser from 'cookie-parser';
 
 const app = express();
+const JWT_SECRET = process.env.JWT_SECRET || '---------KrisPatel---------';
 
 app.use(
   cors({
@@ -22,6 +24,7 @@ app.use(
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true })); 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,34 +35,32 @@ app.use("/api", AuctionRouter);
 
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
+
 app.get("/google/callback", passport.authenticate("google", {
   failureRedirect: "/auth/failure",
 }), (req, res) => {
-  // console.log(req.user);
-  req.session.isAuthenticated = true;
-  req.session.user = req.user;
-  // console.log("User authenticated");
-  res.redirect("http://localhost:5173"); 
+  const user = req.user;
+
+  const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
+    expiresIn: '1h',
+  });
+
+  res.cookie('jwt', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  });
+
+  res.redirect("http://localhost:5173");
 });
+
 
 app.get("/auth/failure", (req, res) => {
   res.send("Failed to login");
 });
 
-app.get("/logout", (req, res, next) => {
-  console.log("Logging out user");
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Session destroy error:", err);
-      return next(err);
-    }
-
-    console.log("Session destroyed:", req.session);
-    res.clearCookie("connect.sid", { path: '/' });
-    res.cookie("connect.sid", "");
-
-    res.status(200).send("Logged out successfully");
-  });
+app.get("/logout", (req, res) => {
+  res.clearCookie('jwt', { path: '/' });
+  res.status(200).send("Logged out successfully");
 });
 
 
