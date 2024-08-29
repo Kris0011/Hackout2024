@@ -41,7 +41,6 @@ app.get("/google/callback", passport.authenticate("google", {
   failureRedirect: "/auth/failure",
 }), (req, res) => {
   const user = req.user;
-
   const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
     expiresIn: '1h',
   });
