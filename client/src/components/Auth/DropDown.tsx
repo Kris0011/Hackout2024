@@ -22,7 +22,7 @@ export default function DropDown() {
   const logout = async() => {
     try{
         
-      await axios.get("http://localhost:3000/logout", { withCredentials: true });
+      await axios.get("https://hackout2024-1.onrender.com/logout", { withCredentials: true });
       dispatch({
         type: "CLEAR_USER",
       });

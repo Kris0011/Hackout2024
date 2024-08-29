@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: process.env.CLIENTID,
       clientSecret: process.env.CLIENTSECRET,
-      callbackURL: "http://localhost:3000/google/callback",
+      callbackURL: "https://hackout2024-1.onrender.com/google/callback",
       passReqToCallback: true, 
     },
     async (req, accessToken, refreshToken, profile, done) => {

@@ -27,7 +27,7 @@ function Auction() {
   const [auctions, setAuctions] = useState<Auction[]>([]);
 
   const { user } = useSelector((state: any) => state.user);
-  const socket = io.connect("http://localhost:3000");
+  const socket = io.connect("https://hackout2024-1.onrender.com");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function Auction() {
       navigate("/");
     }
     try {
-      const res = await axios.get("http://localhost:3000/api/auctions",{withCredentials:true});
+      const res = await axios.get("https://hackout2024-1.onrender.com/api/auctions",{withCredentials:true});
       setAuctions(res.data.auctions);
       console.log("Auctions fetched successfully:", res.data.auctions);
     } catch (error) {

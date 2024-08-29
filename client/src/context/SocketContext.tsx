@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        const newSocket = io.connect('http://localhost:3000');
+        const newSocket = io.connect('https://hackout2024-1.onrender.com');
 
         newSocket.on('connect', () => {
             console.log('Socket connected');

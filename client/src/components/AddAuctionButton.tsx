@@ -59,7 +59,7 @@ const AddAuctionButton = () => {
 
       console.log('Auction Object:', formData);
 
-      const res = await axios.post('http://localhost:3000/api/createauctions', formData, {
+      const res = await axios.post('https://hackout2024-1.onrender.com/api/createauctions', formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',

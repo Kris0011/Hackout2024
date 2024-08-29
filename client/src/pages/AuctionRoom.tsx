@@ -25,7 +25,7 @@ export default function AuctionRoom() {
 
   const [ auction, setAuction ] = useState<any>();
 
-  const socket = io.connect("http://localhost:3000");
+  const socket = io.connect("https://hackout2024-1.onrender.com");
 
 
 
@@ -34,7 +34,7 @@ export default function AuctionRoom() {
   const findAuctionById = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/auction/`,
+        `https://hackout2024-1.onrender.com/api/auction/`,
         { id: id },
         { withCredentials: true }
       );

@@ -18,7 +18,7 @@ export default function App() {
 
   const findUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/getuser", { withCredentials: true });
+      const res = await axios.get("https://hackout2024-1.onrender.com/getuser", { withCredentials: true });
 
       console.log(res.data);
       if (!res.data.isAuthenticated) {

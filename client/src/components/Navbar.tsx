@@ -126,7 +126,7 @@ function Navbar() {
             {user ? (
               <DropDown />
             ) : (
-              <a href="http://localhost:3000/auth/google">
+              <a href="https://hackout2024-1.onrender.com/auth/google">
                 <Button type="primary" size="large">Login</Button>
               </a>
             )}
@@ -208,7 +208,7 @@ function Navbar() {
             {user ? (
               <DropDown />
             ) : (
-              <a href="http://localhost:3000/auth/google">
+              <a href="https://hackout2024-1.onrender.com/auth/google">
                 <Button type="primary" size="large" className="w-full">Login</Button>
               </a>
             )}
